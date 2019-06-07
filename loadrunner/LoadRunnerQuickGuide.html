@@ -4,4 +4,2546 @@
 
 <p>LoadRunner simulates user activity by generating messages between application components or by simulating interactions with the user interface such as keypresses or mouse movements. The messages and interactions to be generated are stored in scripts. LoadRunner can generate the scripts by recording them, such as logging HTTP requests between a client web browser and an application's web server.[1]
 </p>
+
+<p>
+<h4>Why LoadRunner? </h4>
+LoadRunner has about 85% market share in Performance Testing industry
+LoadRunner supports various development tools, technologies and communication protocols. In fact, this is the only tool in market which supports such large number of protocols to conduct Performance Testing
+
+Broadly, LoadRunner supports RIA (Rich Internet Applications), Web 2.0 (HTTP/HTML, Ajax, Flex and Silverlight etc.), Mobile, SAP, Oracle, MS SQL Server, Citrix, RTE, Mail and above all, Windows Socket. There is no competitor tool in the market which could offer such wide variety of protocols vested in a single tool.
+
+LoadRunner is tightly integrated with other HP Tools like Unified Functional Test (QTP) & ALM (Application Lifecycle Management) with empowers you to perform your end to end Testing Processes. 
+
+LoadRunner works on a principal of simulating Virtual Users on the subject application. These Virtual Users also termed as VUsers, replicate client's requests and expect a corresponding response to passing a transaction.
+
+Why do you need Performance Testing?
+An estimated loss of 4.4 billion in revenue is recorded annually due to poor web performance.
+
+In today's age of Web 2.0, users click away if a website doesn't respond within 8 seconds. Imagine yourself waiting for 5 seconds when searching for Google or making a friend request on Facebook. The repercussions of performance downtime are often more devastating than ever imagined. We've examples such as those that recently hit Bank of America Online Banking, Amazon Web Services, Intuit or Blackberry.
+
+According to Dunn & Bradstreet, 59% of Fortune 500 companies experience an estimated 1.6 hours of downtime every week. Considering the average Fortune 500 company with a minimum of 10,000 employees is paying $56 per hour, the labor part of downtime costs for such an organization would be $896,000 weekly, translating into more than $46 million per year.
+
+Only a 5-minute downtime of Google.com (19-Aug-13) is estimated to cost the search giant as much as $545,000.
+
+It's estimate that companies lost sales worth $1100 per second due to a recent Amazon Web Service Outage.
+
+When a software system is deployed by an organization, it may encounter many scenarios that possibly result in performance latency. A number of factors cause decelerating performance, few examples may include:
+
+Increased number of records present in the database
+Increased number of simultaneous requests made to the system
+a larger number of users accessing the system at a time as compared to the past
+What is LoadRunner Architecture?
+Broadly speaking, the architecture of LoadRunner is complex, yet easy to understand.
+
+Introduction to HP LoadRunner  and its Architecture
+Loadrunner Architecture Diagram
+Suppose you are assigned to check the performance of Amazon.com for 5000 users
+
+
+In a real-life situation, these all these 5000 users will not be at homepage but in a different section of the websites. How can we simulate differently 
+
+VUGen:
+
+VUGen or Virtual User Generator is an IDE (Integrated Development Environment) or a rich coding editor. VUGen is used to replicate System Under Load (SUL) behavior. VUGen provides a "recording" feature which records communication to and from client and Server in form of a coded script - also called VUser script.
+
+So considering the above example, VUGen can record to simulate following business processes:
+
+Surfing the Products Page of Amazon.com
+Checkout
+Payment Processing
+Checking MyAccount Page
+Controller
+
+Once a VUser script is finalized, Controller is the main component which controls the Load simulation by managing, for example:
+
+How many VUsers to simulate against each business process or VUser Group
+Behavior of VUsers (ramp up, ramp down, simultaneous or concurrent nature etc.)
+Nature of Load scenario e.g. Real Life or Goal Oriented or verifying SLA
+Which injectors to use, how many VUsers against each injector
+Collate results periodically
+IP Spoofing
+Error reporting
+Transaction reporting etc.
+Taking an analogy from our example controller will add the following parameter to the VUGen Script
+
+1) 3500 Users are Surfing the Products Page of Amazon.com
+
+2) 750 Users are in Checkout
+
+3) 500 Users are performing Payment Processing
+
+4) 250 Users are  Checking MyAccount Page ONLY after 500 users have done Payment Processing
+
+Even more complex scenarios are possible
+
+Initiate 5 VUsers every 2 seconds till a load of 3500 VUsers (surfing Amazon product page) is achieved.
+Iterate for 30 minutes
+Suspend iteration for 25 VUsers
+Re-start 20 VUSers
+Initiate  2 users (in Checkout, Payment Processing, MyAccounts Page) every second.
+2500 VUsers will be generated at Machine A
+2500 VUsers will be generated at Machine B
+Agents Machine/Load Generators/Injectors
+
+LoadRunner Controller is responsible to simulate thousands of VUsers - these VUsers consume hardware resources for example processor and memory - hence putting a limit on the machine which is simulating them. Besides, Controller simulates these VUsers from the same machine (where Controller resides) & hence the results may not be precise. To address this concern, all VUsers are spread across various machines, called Load Generators or Load Injectors.
+
+As a general practice, Controller resides on a different machine and load is simulated from other machines. Depending upon the protocol of VUser scripts and machine specifications, a number of Load Injectors may be required for full simulation. For example, VUsers for an HTTP script will require 2-4MB per VUser for simulation, hence 4 machines with 4 GB RAM each will be required to simulate a load of 10,000 VUsers.
+
+Taking Analogy from our Amazon Example, the output of this component will be
+
+Analysis:
+
+Once Load scenarios have been executed, the role of "Analysis" component comes in.
+
+During the execution, Controller creates a dump of results in raw form & contains information like, which version of LoadRunner created this results dump and what were configurations.
+
+
+All the errors and exceptions are logged in a Microsoft access database, named, output.mdb. The "Analysis" component reads this database file to perform various types of analysis and generates graphs.
+
+These graphs show various trends to understand the reasoning behind errors and failure under load; thus help to figure whether optimization is required in SUL, Server (e.g. JBoss, Oracle) or infrastructure.
+
+Below is an example where bandwidth could be creating a bottleneck. Let's say Web server has 1GBps capacity whereas the data traffic exceeds this capacity causing subsequent users to suffer. To determine system caters to such needs, Performance Engineer needs to analyze application behavior with an abnormal load. Below is a graph LoadRunner generates to elicit bandwidth.
+
+Introduction to HP LoadRunner  and its Architecture
+
+Performance Testing Roadmap: Detailed Steps
+Performance Testing Roadmap can be broadly divided into 5 steps:
+
+Planning for Load Test
+Create VUGen Scripts
+Scenario Creation
+Scenario Execution
+Results Analysis (followed by system tweaking)
+Now that you've LoadRunner installed, let's understand the steps involved in the process one by one.
+
+Introduction to HP LoadRunner  and its Architecture
+
+Steps involved in Performance Testing process
+
+Planning for the Load Test
+Planning for Performance Testing is different from planning a SIT (System Integration Testing) or UAT (User Acceptance Testing). Planning can be further divided into small stages as described below:
+
+Assemble Your Team
+Introduction to HP LoadRunner  and its Architecture
+
+When getting started with Performance Testing, it is best to document who will be participating in the activity from each team involved during the process.
+
+Project Manager:
+
+Nominate the project manager who will own this activity and serve as point person for escalation.
+
+Function Expert/ Business Analyst:
+
+Provide Usage Analysis of SUL & provides expertise on business functionality of website/SUL
+
+Performance Testing Expert:
+
+Creates the automated performance tests and executes load scenarios
+
+System Architect:
+
+Provides blueprint of the SUL
+
+
+Web Developer and SME:
+
+Maintains website & provide monitoring aspects
+Develops website and fixes bugs
+System Administrator:
+
+Maintains involved servers throughout a testing project
+Outline applications and Business Processes involved:
+Successful Load Testing requires that you plan to carry out certain business process. A Business Process consists of clearly defined steps in compliance with desired business transactions - so as to accomplish your load testing objectives.
+
+A requirements metric can be prepared to elicit user load on the system. Below is an example of an attendance system in a company:
+
+Introduction to HP LoadRunner  and its Architecture
+
+In the above example, the figures mention the number of users connected to the application (SUL) at given hour. We can extract the maximum number of users connected to a business process at any hour of the day which is calculated in the rightmost columns.
+
+Similarly, we can conclude the total number of users connected to the application (SUL) at any hour of the day. This is calculated in the last row.
+
+The above 2 facts combined give us the total number of users with which we need to test the system for performance.
+
+Define Test Data Management Procedures
+Statistics and observations drawn from Performance Testing are greatly influenced by numerous factors as briefed earlier. It is of critical significance to prepare Test Data for Performance Testing. Sometimes, a particular business process consumes a data set and produces a different data set. Take below example:
+
+A user 'A' creates a financial contract and submits it for review.
+Another user 'B' approves 200 contracts a day created by user 'A'
+Another user 'C' pays  about 150 contracts a day approved by user 'B'
+In this situation, User B need to have 200 contracts 'created' in the system. Besides, user C needs 150 contracts as "approved" in order to simulate a load of 150 users.
+
+This implicitly means that you must create at least 200+150= 350 contracts.
+
+After that, approve 150 contracts to serve as Test data for User C - the remaining 200 contracts will serve as Test Data for User B.
+
+ 
+
+Outline Monitors
+Speculate each and every factor which could possibly affect the performance of a system. For example, having reduced hardware will have potential impact on the SUL(System Under Load) performance.
+
+Enlist all factors and set up monitors so you can gauge them. Here are few examples:
+
+Processor    (for Web Server, Application Server, Database Server, and Injectors)
+RAM   (for Web Server, Application Server, Database Server, and Injectors)
+Web/App Server (for example IIS, JBoss, Jaguar Server, Tomcat etc)
+DB Server (PGA and SGA size in case of Oracle and MSSQL Server, SPs etc.)
+Network bandwidth utilization
+Internal and External NIC in case of clustering
+Load Balancer (and that it is distributing load evenly on all nodes of clusters)
+Data flux   (calculate how much data moves to and from client and server - then calculate if a capacity of NIC is sufficient to simulate X number of users)
+Create VUGen Scripts
+Next step after planning is to create VUser scripts.
+
+Scenario Creation
+Next step is to create your Load Scenario
+
+Scenario Execution
+Scenario execution is where you emulate user load on the server by instructing multiple VUsers to perform tasks simultaneously.
+
+You can set the level of a load by increasing and decreasing the number of VUsers that perform tasks at the same time.
+
+This execution may result in the server to go under stress and behave abnormally. This is the very purpose of the performance Testing. The results drawn are then used for detailed analysis and root cause identification.
+
+Results Analysis (followed by system tweaking)
+During scenario execution, LoadRunner records the performance of the application under different loads. The statistics drawn from test execution are saved and details analysis is performed. The 'HP Analysis' tool generates various graphs which help in identifying the root causes behind a lag of system performance, as well as a system failure.
+
+Some of the graphs obtained include:
+
+Time to the First buffer
+Transaction Response Time
+Average Transaction Response Time
+Hits Per Second
+Windows Resources
+Errors Statistics
+Transaction Summary
+ 
+
+FAQ
+Which Applications should we Performance Test?
+Performance Testing is always done for client-server based systems only. This means, any application which is not a client-server based architecture, must not require Performance Testing.
+
+For example, Microsoft Calculator is neither client-server based nor it runs multiple users; hence it is not a candidate for Performance Testing.
+
+Introduction to HP LoadRunner  and its Architecture
+
+What is the difference between Performance Testing & Performance Engineering
+It is of significance to understand the difference between Performance Testing and Performance Engineering. An understanding is shared below:
+
+Performance Testing is a discipline concerned with testing and reporting the current performance of a software application under various parameters.
+
+Performance engineering is the process by which software is tested and tuned with the intent of realizing the required performance. This process aims to optimize the most important application performance trait i.e. user experience.
+
+Historically, testing and tuning have been distinctly separate and often competing realms. In the last few years, however, several pockets of testers and developers have collaborated independently to create tuning teams. Because these teams have met with significant success, the concept of coupling performance testing with performance tuning has caught on, and now we call it performance engineering.
+
+</p>
+<p>
+
+Download and Install HP LoadRunner
+
+Following is the step by step process to install LoadRunner Community Edition(Free version). Vugen comes bundled in the community edition. Microfocus has now taken over the LoadRunner tool. Installing LoadRunner is a 2-step process
+
+Part 1) Download
+Part 2) Install
+We will cover them one by one
+
+Part 1) Download
+Step 1) Go to https://software.microfocus.com/signup.
+
+Enter Data and Click Sign Up
+
+
+
+Step 2) In the next screen, you will see a message registration was successful.
+
+
+
+Step 3) Check your Inbox and confirm your email.
+
+
+
+Step 4) Go to Login Page - https://login.software.microfocus.com/msg/actions/showLogin
+
+Enter your email
+Click continue
+
+
+Step 5) In the next screen,
+
+Enter your Password
+Click "Sign In" button.
+
+
+Step 6) You will be taken to your Dashboard. Click the download button
+
+
+
+Step 7) In the next screen, Click on HPE LoadRunner 12.55 Community Edition.
+
+
+
+Step 8) Download will begin. Extract the Downloaded file.
+
+
+
+Part 2) Install LoadRunner
+Step 1) Click HPE LoadRunner in the unzipped folder
+
+
+
+
+Step 2) Select the Destination folder and click on install button.
+
+
+
+Step 3) Installation process starts
+
+
+
+Step 4) Once installation is done. In the next screen,
+
+Select Microsoft Visual C++ 2010 Redistributable Package
+Click OK button
+
+
+Step 5) Microsoft Visual C++ 2010 Redistributable Setup installation will begin
+
+
+
+Step 6) Once dependency installation is complete, In the welcome screen
+
+Select on LoadRunner
+Click on Next Button
+
+
+Step 7) In the next screen,
+
+Select all checkbox.
+Click on next button
+
+
+Step 8) Choose the Destination Folder and Click Next
+
+
+
+Step 9) In next screen, Click on the Install button
+
+
+
+Step 10) If the Windows Firewall shows up, Click on Allow access
+
+
+
+Step 11) In the next screen, Unselect option "LoadRunner Agent" and click Next
+
+
+
+Step 12) In next screen, Select HR Network Virtualization
+
+
+
+Step 13) Installation will begin
+
+
+
+Step 14) Finally you will be shown the license details
+
+
+
+Step 15) In the next screen, Select Restart Now
+
+
+
+
+Step 16) After reboot, Click on Loadrunner Icon on Desktop to start MicroFocus Loadrunner
+
+
+
+VuGen(Virtual User Generator) Script Recording Example in LoadRunner
+
+What is VUGen?
+VUGen is one of the four core components of LoadRunner. It is the first component you interact with when getting started with Performance Testing using HP LoadRunner.
+
+Let’s understand a few salient features related to VUGen
+
+VUScripts: As already described, the purpose of VUGen is to create VUScripts that are used to simulate a real-like virtual-user.
+
+Actions: An action is set of user transactions performed in the System Under Load to achieve a defined task. An action can be compared to a function in other programming languages. Each Vuser script has 3 default functions
+
+Vuser_init(used to login into the application)
+Action (used to record the business process)
+Vuser_end (used to logout of the application)
+VUGen not only records scripts but also replays them (for only 1 VUser) to ensure script is recorded correctly. Once you ensure the script is recorded correctly you incorporate it in a LoadRunner scenario
+
+In this tutorial, you are going to study
+
+The script development process in VUGen
+Compare recording between QTP and LoadRunner
+Introduction to Web Tours Application
+Understanding the VUGen Environment
+Creating Your First VUGen Script
+Using Transactions at Record Time
+Insert Comments at Record Time
+Code Generation
+Deciding a Protocol and Protocol Advisor
+Recording Options
+Playback a Script and understanding Log
+Overview of Files Generated During Record & Playback
+The script development process in VUGen
+Understanding VUGen in LoadRunner
+
+1. Record the Script: Usually, this is the first step of scripting where every user action is recorded into a script.
+
+2. Replay and Verify: Once the script is recorded, reply the script to ensure its working right. Verify any impact through application frontend or database.
+
+3. Enhance the Script: Once recording has been verified, enhance script by adding checkpoints, validating data, adding transactions and rendezvous points.
+
+4. Replay and Verify: As earlier, re-play your script and verify that everything is working as intended.
+
+5. Configure Runtime Settings: Configure and control pacing duration, think time variation, proxy settings and whether you wish to ignore any external resources.
+
+6. Use for Load Scenarios: Formulate load scenarios based on test objectives. Use load distribution and geo-wide agents to make real like scenarios.
+
+Compare recording between QTP and LoadRunner
+VUGen disregards UI Objects:
+
+Unlike QTP scripts, LoadRunner scripts are independent of GUI. This is because the code generated does not work based on UI objects, rather, it works on the principal of client’s request to the server and expecting server response back to the client. This is why replaying LoadRunner scripts are always browser independent. The VUser can communicate directly with a server by executing calls to the server API-without relying on client software (SUL) this means there will no impact on scripts if the changes are made to the UI of the System Under Load. This tells; the Performance Testing is completely based on client/server communication (request and response) and not the GUI objects.
+
+Please refer to below link for more details: http://youtu.be/FDORUeqpNJs?t=3m41s
+
+We will see in more details how VUGen works below.
+
+Introduction to Web Tours Application
+For all hands-on purpose, we will be using the Web Tours Application that comes bundled with LoadRunner.
+
+The HP Web Tours require a dependent “Web tours Apache server” to be running before it can operate. To run the Web Tours Apache Server, go to Start Menu => HP Software => Samples => Web and then click on Start HP Web Tour Server.
+
+Understanding VUGen in LoadRunner
+
+
+Once the “server” has been activated, it will open a shell and output on the console.
+
+The console should look like snapshot below, look for your IP address in the shell:
+
+Understanding VUGen in LoadRunner
+
+NOTE: if you close this window, the server will stop.
+
+Now you can access the Web Tours Application –
+
+Understanding VUGen in LoadRunner
+
+Once launched, it will look like –
+
+Understanding VUGen in LoadRunner
+
+Understanding the VUGen Environment
+To run the VUGen, double-click on the VUGen shortcut from the desktop, or go to Start Menu => HP Software => and then click on Virtual User Generator.
+
+Understanding VUGen in LoadRunner
+
+VUGen splash screen will appear as follows
+
+Understanding VUGen in LoadRunner
+
+The splash screen will subsequently open HP VUGen Home page, as shown below:
+
+Understanding VUGen in LoadRunner
+
+From the File menu, you can observe various command controls. The purpose of these controls are mentioned below:
+
+Understanding VUGen in LoadRunner
+
+New Script and Solution: is used to start creating a new script. Alternatively, you can create a new script from the toolbar button.
+
+Open >> Script Solution: is used to open an existing, previously created script or solution from a directory.
+
+Add >> New Script: is used to add a previously created script into the current solution
+
+
+We will get acquainted with other controls as we start creating our first script. Let’s continue learning.
+
+ 
+
+Click here if the video is not accessible 
+
+Creating Your First VUGen Script
+Before you record, make sure the Web Tours App server is running. Remember, you need to keep the server running so do not close it. If the window bothers you, you can minimize it.
+
+Tip: In a real-world problem, one needs to get acquainted with the subject application (SUL) especially if it involves complex business workflows and data stages. You can also interact with HP Web Tours to ensure you can repeat the exact steps when recording.
+
+Before one can start with scripting of any application (SUL), one needs to get acquainted with the application flow. With this tutorial, let’s get acquainted with HP Web Tours which is shipped and automatically installed with HP LoadRunner.
+
+Step 1) Click on File =>New Script and Solution as shown in the snapshot below:
+
+Understanding VUGen in LoadRunner
+
+You can use the shortcut (Ctrl + N) to do the same.
+
+Step 2) A window to select the protocol is shown.  The list looks slightly different from previous versions
+
+1. Select Single Protocol
+
+2. Web
+
+3. Enter Script Name
+
+4. Click Create
+
+Understanding VUGen in LoadRunner
+
+Note: You can use Protocol Advisor to determine right protocol your application uses for communication. For HP Web Tours, we already know that it requires “Web – HTTP/HTML” protocol. We will learn at a later stage how to determine the right protocol for your SUL.
+
+Tip: An application may require more than 1 Protocols sometimes to communicate with its server. For such a case, navigate to Multiple Protocols list on the left side of window.
+
+Understanding VUGen in LoadRunner
+
+HP Web Tours, however, requires only one protocol when scripting with VUGen.
+
+
+Tip: You cannot rename your scripts easily, so be creative when giving your scripts a name. If you’ve to rename a script, use Save As feature and give a new name. A good nomenclature could be something like WT01_Signup where WT is a short form of the application name, 01 is a business process sequence, and Sign up refers to the business processes being scripted. Also, note that you cannot use spaces in a script name.
+
+Step 3) once you click Create, HP VUGen will open the IDE (Integrated Development Environment) or code editor. You can notice the script files are blank, except basic signature of Function Action. Below snapshot should help understand it more:
+
+Understanding VUGen in LoadRunner
+
+Step 4) Click the Recording buttonUnderstanding VUGen in LoadRunner which you can find in the toolbar. Refer to the snapshot below:
+
+Understanding VUGen in LoadRunner
+
+Step 5) a new window opens
+
+Understanding VUGen in LoadRunner
+
+1. If we study the above window, the name of the script is mentioned in the title bar of this popup. This will help you make changes to the right script when you are dealing with multiple scripts opened at a time.
+
+2. If you do not see the rest of controls, click on the Fewer Options button to ensure you are not viewing fewer options.
+
+3. Record into the action field determines where the code is generated after recording. VUGen facilitates switching to other actions or creates new actions during and after recording.
+
+4. Record: field tells VUGen that the subject application (SUL) is a web application or a desktop client. This option cannot be overridden once recording begins.
+
+5. Application: field tells VUGen, which browser to use for recording. If you are not working with Web – HTTP/HTML protocol, you will select the desktop client with this field.
+
+Tip: Unlike QTP scripts, LoadRunner scripts are independent of GUI. This is because the code generated does not work based on UI objects, rather, it works on the principle of client’s request to the server and expecting server response back to the client – usually, in the form of HTML (hence the name of a protocol)
+
+6. URL Address: The URL of the SUL is input here. VUGen will invoke this URL when “Start Recording” is clicked. The browser used will be the one mentioned under “Record:” field if it is different from your default browser.
+
+7. Start Recording: Immediate vs. Delayed: If you’ve selected Immediate recording mode, you will notice that VUGen starts recording events as soon as you hit “Start Recording” button. However, if you select Delayed recording mode, the VUGen will invoke the system (SUL) but will not commence capturing events unless you click on the Recording button from the floating bar.
+
+8. Working Directory: This is a temporary directory which VUGen will use while capturing events. A copy of your script will be available at this location as well, just in case if you lose your folder :)
+
+9.Recording Options: These settings tell VUGen what type of URLs to capture and what recording mode to use.
+
+10.Start Recording: Will start recording. Click on it
+
+Step 6) Once recording starts, VUGen will invoke the HP Web Tours application using the browser selected.
+
+Let’s Sign up a user at Web Tours application and record a basic script.
+
+Understanding VUGen in LoadRunner
+
+Understanding VUGen in LoadRunner
+
+A floating recording bar will appear which will offer various controls over recording.  This tells the time elapsed and a number of events automatically captured. Let’s look at the floating bar closely.
+
+Understanding VUGen in LoadRunner
+
+In the snapshot shown above, the SUL has fired 56 events and a total of 0 minutes and 25 seconds of time duration has elapsed since recording began.
+
+You’ll also observe that no events are fired as you type. Ask yourself why. Can you answer?
+
+This is because no client to server communication takes place as you type. Hence, no events are fired and no script is generated regarding typing. The code will be generated only once you submit the form (click Continue)
+
+Recording can be pause Understanding VUGen in LoadRunner using the pause button. Please note, as long as the recording remains paused, all events being fired by the application will be disregarded. This also means that even if your application is sending requests and/or receiving response form SUL, the script will not be generated as long as you’ve paused the recording.
+
+If you’ve paused recording, you will need to click recording Understanding VUGen in LoadRunnerbutton from the floating bar to resume recording.
+
+While you are recording in vuser_init section, you’d notice that rendezvous button is not enabled. Switch to Action (or create a new Action) and continue recording. Refer to below snapshot to learn how to switch Action.
+
+Understanding VUGen in LoadRunner
+
+You’ll notice that after switching to an Action, the rendezvous Understanding VUGen in LoadRunner button will be enabled automatically. This is because VUGen does not allow insertion of rendezvous points in vuser_init.
+
+Using Transactions at Record Time
+Let’s assume you wish to gauge response time when X number of users simultaneously Sign up. To address this objective, let’s read further. 
+
+By now you’ve recorded opening of the application in vuser_init action. After you’ve switched to Action, enter the user information required by SUL. Now before you hit “Continue” button, follow below steps:
+
+Start a transaction by clicking buttonUnderstanding VUGen in LoadRunner in floating bar. Enter the name of the transaction, for example, 01_Signup.
+
+Tip: It is a good practice to name your transaction with a prefix like 01_ to help keep them unique.
+
+The floating bar will look like this:
+
+Understanding VUGen in LoadRunner
+
+Click OK to close the transaction label.
+
+Click the Continue button of the application.
+
+End transaction by clicking buttonUnderstanding VUGen in LoadRunner. Select the name of the transaction you wish to close, for example, 01_Signup in this case. Refer to below snapshot for illustration.
+
+Understanding VUGen in LoadRunner
+
+If you do not have multiple transactions opened, you’ll see only one name. If you’ve multiple, however, you’ll 0be able to select from the list.  
+
+Insert Comments at Record Time:
+Now that you’ve successfully closed the transaction, you can put a comment at record time to give yourself a reminder when you study the code later. From the floating bar, click on the button to insert a comment. A text box will appear adjacent to the floating bar where you can enter any text.
+
+Understanding VUGen in LoadRunner
+
+This comment will be inserted into the code after the steps (code) you’ve just finished before clicking OK button.
+
+From the application, you can click continue. You’ll observe a welcome note by an application.
+
+Now select vuser_end action and click Sign off from the application. Close the application and click stop button Understanding VUGen in LoadRunner from the floating bar.
+
+Code Generation:
+Once recording has been stopped, you’ll notice VUGen post generation activity. This includes generating code, transactions, and comments based on your recording. Refer to snapshot below.
+
+ 
+
+Understanding VUGen in LoadRunner
+
+Immediately after VUGen finished “Performing post generation operations” it will start “Performing scan for correlation post generation operation” We will see in more detail what correlation means.  
+
+Understanding VUGen in LoadRunner
+
+Once post generation operation is finished, you will see Design Studio window. If any candidates for correlation are found, you’ll be able to review them in this window.  
+
+Understanding VUGen in LoadRunner
+
+You can safely click on the Close button, and VUGen will take you to the code that has been generated.
+
+The window will look like this:
+
+Understanding VUGen in LoadRunner
+
+As highlighted in the above figure, the editor contains easy to understand, readable code. You can have a look on the parameters used while recording.
+
+The left side of VUGen is called Step Navigator that lets you understand the “script” without looking at the granularities of the code. For example, you can read steps as, opening a URL, spend Think Time and submit the form. This encapsulates all the parameters associated with each request.
+
+Your script has been generated, click on the File menu and then click on Save Script As to browser the location where you wish to save your script. VUGen will automatically suggest the last directory used if you’ve already saved a script earlier. The name suggested will be the name you mentioned when you started recording.
+
+All done.
+
+Now, congratulate yourself for having your first script successfully generated and saved.
+
+Deciding a Protocol and Protocol Advisor
+You might have questioned yourself why did we use Web – HTTP/HTML protocol. How did we decide which protocol should we use? The answer is not that simple.
+
+There is an architectural foundation set of skills you need to have in place as a prerequisite to answering this question. If you are a beginner, you can pair up with someone who has solid client-side architectural and development skills for your SUL. You can speak with the developers of your SUL and find out which interfaces your application leverages. This should lead you on a natural path to the interfaces that you will be using for your virtual user script development and protocol selection.
+
+To address the needs of beginners less knowledgeable in architectural skills, LoadRunner introduced a feature called Protocol Advisor in LoadRunner 9.1. While this has made life easier for many, one should rely more on the architectural and development skills instead of protocol advisor and receiving information from the development team about underlying development technologies. Protocol may not suggest correct protocol in all cases.
+
+To use Protocol Advisor, go to Record => Protocol Advisor => Analyze Application
+
+Refer to snapshot below:
+
+Understanding VUGen in LoadRunner
+
+This will open the main window of Protocol Advisor. If you notice, this resembles a bit with the window appearing for recording. Let’s have a look at the window below:
+
+Understanding VUGen in LoadRunner
+
+Select the Web Browser since we are using a web-based application.
+
+Specify the URL of the application that will subsequently be invoked. Working directory can be left as such since this is merely a temporary directory for VUGen to use. Ensure you’ve read and write access on this directory.
+
+Click the Start Analyzing button.
+
+A floating bar, somewhat similar to the record time floating bar will appear. Have a look at the snapshot:
+
+Understanding VUGen in LoadRunner
+
+The process will tell the time elapsed and a number of events fired. However, this information is not necessary. The only benefit of this events counter is, you know your client, SUL, is communicating with the server.
+
+It is a good practice to analyze only one business process at a time since the various business process in a large enterprise application may involve various protocols. For example, a dashboard in some application may have Ajax or Flex, etc. but this will not be present on the login page.
+
+Once you’ve finished executing a particular business process, you can hit the Stop button. The VUGen protocol advisor will come up with a summary report on the protocol suggestion. Have a look how it looks like:
+
+Understanding VUGen in LoadRunner
+
+You can see the suggestions from Protocol Advisor. These may or may not be the best choices to pick.
+
+You’ve learned to use Protocol Advisor by now. However, this could be helpful for beginners or for a situation where you need “another opinion” – rely on your architectural sense, programming knowledge, development skills and information received from the development team to decide on the protocol.
+
+Recording Options
+Whenever VUGen generates a script, the code generated is based on various configurations that can be found under the “Recording Options” – or you can press Ctrl + F7 to view the Recording Options.
+
+Let’s have a look at recording options window before we discuss all configurations:
+
+Understanding VUGen in LoadRunner
+
+There are various categories of configurations like General, Correlations, Network and Data Format Extension. Let’s understand most significant among these, one by one.  
+
+General => Recording:
+
+This topic requires detail understanding. Hence this is discussed separately.
+
+General => Script: 
+
+Have a look at the snapshot for a glimpse:
+
+ Understanding VUGen in LoadRunner
+
+ 
+
+You’ll notice that Language dropdown is disabled. A common myth is that the LoadRunner does not generate code in any other language. Another myth is that it requires a license to work in other languages.
+
+Both are false. LoadRunner decides for itself which language to use when generating the script. In almost all cases, you’ll find yourself working with C Language.
+
+For certain Java applications (like Java applets) the code being generated will be in JavaScript Language.
+
+VUGen will generate a script in VBScript Language only for applications developed in Visual Basic classic (MS Visual Studio 2002)
+
+Scripting Options:
+
+You can opt to “Generate fixed think time after end transaction”. This means, no matter how much a user wait, the think time generated (the delay) will be equal to value specified. The value is in seconds.
+
+A maximum number of lines in the action file refers to the maximum number of lines VUGen will generate an action. If the script is larger, VUGen will automatically create a new action. The default is set to 60,000. The maximum value which can be specified is 65,000
+
+You may find this configuration helpful when dealing with a desktop application with Oracle on the backend.
+
+General => Protocol gives you an option to select and deselect any protocols you’ve selected at the start of recording
+
+Essentially, this will be used only when you wish to Re-Generate Script.
+
+Have a look at the screen:
+
+Understanding VUGen in LoadRunner
+
+This is helpful when you’ve used multi-protocols at the time of recording a script. You can regenerate the script and deselect the protocols you don’t wish and get a new script without having to re-record it.
+
+General => Code Generation:
+
+Have a look at the snapshot below:
+
+ 
+
+Understanding VUGen in LoadRunner
+
+This configuration tells VUGen to find candidates for correlation at record time. If you do not wish for Automatic Correlation, then you might wish to turn off this feature.
+
+Correlation => Configuration:  
+
+Have a look at the screenshot below and familiarize yourself with the screen.
+
+Understanding VUGen in LoadRunner
+
+Although automatic correlation is helpful from 5% to 10% only, yet you can select “Rules Scan” and “Automatically correlate values found”. However, if your script doesn’t play, you can consider restoring to defaults by clicking on a button.
+
+Correlation => Rules:
+
+Go to Rules, and here you can see various rules VUGen is using to find correlation candidates. You can add custom rules if you know what your application (SUL) is using as parameters. However, this is an advanced use of record time settings. If you’re a beginner, you can safely skip this topic. 
+
+ 
+
+Understanding VUGen in LoadRunner
+
+HTTP Properties => Advanced:
+
+This frame offers various settings related to HTTP binding.
+
+Reset context for each action, enabling this option instructs VUGen to reset all HTP contexts between actions to their initial state before recording, providing a clean beginning for the recording session. The option is enabled by default.
+
+You can leave the rest of configurations intact unless required.
+
+Understanding VUGen in LoadRunner
+
+Network => Port Mapping:
+
+This frame should be left intact. If you’re recording a desktop application, then you may have to choose WinINet level data.
+
+Understanding VUGen in LoadRunner
+
+You can go to Options (as long as you’re using Socket level data) and select various options like SSL version or other types of Secure Socket Layer. If you’re a beginner level or do not require these options, you can skip. Have a look to get yourself acquainted with the screen.
+
+Understanding VUGen in LoadRunner
+
+Now you’re done with most of the Record Time options, let’s move to the next topic and understand the difference between HTML and URL based scripting.
+
+Difference between HTML-based and URL-based Scripting
+You may have noticed an option to pick either HTML-based script or URL-based script. Have a look at the snapshot for a flashback.
+
+Understanding VUGen in LoadRunner
+
+So what is this option and which one to pick?
+
+The HTML-based script is based on user actions, and the scripts contain functions that correspond directly to the action taken. Let’s understand example of a small piece of code:
+
+Example:
+
+web_link(“Enterprise Systems Performance",
+"Text=Enterprise Systems Performance,"
+"Snapshot=t4.inf",
+LAST);
+The URL-based script is based on HTTP requests sent to the server as a result of user actions.
+
+Here is an example of code for URL mode for the same actions performed as above (in HTML mode)
+
+Example:
+
+web_url(“Enterprise Systems Performance",
+"URL=/esp.html",
+"TargetFrame=",
+"Resource=0",
+"RecContentType=text/html",
+"Referer=/atc?. . . ,
+"Snapshot=t4.inf",
+"Mode=URL",
+LAST);
+Tip: It’s best to experiment yourself before you move forward. Change the record time settings and record the same script twice i.e. once with HTML mode and once with URL mode – then compare both. Keep the script short so you can understand the difference.
+
+How do we decide on which mode to use?
+
+Let’s understand the pros and cons of both modes so understand which mode is more suitable under certain situations:
+
+Benefits of HTML Recording
+
+Reduces need to capture dynamic values
+Action tag values and hidden data are NOT hardcoded
+They are retrieved from memory during playback
+If they are dynamic, the VUser still run
+Script is only as big as the business process–one step per page
+Disadvantages of HTML Recording
+
+Scripts are less scalable
+Memory (cache) is searched during playback
+requires more memory
+requires more CPU power
+Benefits of URL Recording
+
+Flexibility
+Support for Java Applets and ActiveX objects on the page
+Ability to replay on UNIX
+Scalability
+Scripts are more scalable than HTML scripts because they require fewer resources
+Disadvantages of URL recording
+
+Scripts require more correlation (nothing is retrieved from the cache)
+Context-sensitive checks won’t work (parser is disabled)*
+Scripts are large (all images and frames are recorded as separate steps)
+Here is a quick illustration:
+
+HTML Mode
+
+URL Mode
+
+Intuitive and easy to understand
+
+Not as intuitive as the HTML scripts
+
+Scripts are smaller, requests are encapsulated and easy to understand
+
+Scripts are large, containing a call to each image, css, html, etc. thus making it difficult to understand.
+
+Scalable
+
+More scalable and effective for creating a load test
+
+Use of Re-Generate Script
+Let’s suppose you want to record the same script you just recorded, but with different record time settings. In such a case, you can use the regenerate script feature.
+
+You can access it under Record => Regenerate Script or with hotkey Ctrl+Shift+R
+
+Understanding VUGen in LoadRunner
+
+Once you click on the menu, VUGen will give you a warning that your existing script and all changed you’ve made to your existing script will be lost. The warning message looks like this:
+
+Understanding VUGen in LoadRunner
+
+You can also click on Options to open Record Time Options from here.
+
+Click OK to proceed with Re-Generation of a script.
+
+Playback a Script and understanding Log
+Once you’ve saved the script, you can click on the Understanding VUGen in LoadRunner in the toolbar to replay or hit F5.
+
+You can find this button in the toolbar:
+
+Understanding VUGen in LoadRunner
+
+You need to ensure the server is running (which is required for application to work properly)
+
+When you replay the script, you’ll notice that unlike QuickTest Professional, it doesn’t open any browser to replay. Remember, this execution will simulate only 1 (single) user load on the SUL. The purpose of this execution is to ensure your script is working.
+
+Understanding VUGen in LoadRunner
+
+Tip: You’ll need to verify the impact from the application itself. For example, if you’re creating a record, go to the application and verify manually that your script actually created a record. Your scripts, most likely, will not be tested by yet another Testing or QA team so you need to be very careful with your script and ensure these are thoroughly tested.
+
+You can leave the replay log active since this will be a great help in identifying candidates for correlation and any errors and warning you might come across. Since generating log takes ample resources, it is best-turned off when you’re done with debugging of scripts and using them for scenarios.
+
+Overview of Files Generated During Record & Playback
+Let’s close the VUGen and have a look at the files it has created in the script folder.
+
+VUGen creates a series of configuration files, data files and source code files which contain VUser run-time and setup information. The results of each iteration of the script are stored separately. If you’ve executed your script at least once, you will notice a directory by the name result1. This directory is for system use and should be ignored by the tester.
+
+Important files which you need to understand:
+
+VUGen will create one .c (C Language Code file) for each action. Thus, at the last, you’ll have vuser_init.c and vuser_end.c and Action.c – if you’ve more actions created, you will see corresponding files too. For example, myAction.c
+
+The replay log is saved in a file called output.txt. If you’ve replaced it multiple times, output.txt will contain the last execution log whereas, output.bak will contain previous to the last run.
+
+<script_name>.usr file will contain all the run time configurations you’ve customized. Even if you’ve left all the configurations to default, this usr file will contain the information. This file also contains the version of LoadRunner used for creating a script. This information is helpful if you’re reading old scripts for which you can’t recall the version number.
+
+You will see a folder named “data”. This folder keeps an image of the events as well as a copy of your code. VUGen makes use of these files when you “ReGenerate” your code.
+
+Parameterization, Functions, Transactions in LoadRunner
+
+A recorded script can simulate a virtual user; however, a mere recording may not be enough to replicate the “real user behaviour”.
+
+When a script is recorded, it covers single and straight flow of the subject application. Whereas, a real user may perform multiple iterations of any process before he logs out. The delay between clicking buttons (think time) will vary from person to person. Chances are that some real users access your application over DSL and some access it over a dial-up. So, in order to get the real feel of end user, we need to enhance our scripts to be exact match, or at least very close in behaviour to real users.
+
+The above is the most significant consideration when conducting “Performance Testing”, but there is more to a VU Script. How will you gauge the precise amount of time taken by a VUser when SUL is undergoing a performance test? How would you know if the VUser has passed through or failed at certain point? What is the cause behind the failure, whether some backend process failed or the server resources were limited?
+
+We need to enhance our script to help answer all above questions.
+
+Using Transactions
+Understanding Think Time, Rendezvous Points and Comments
+Inserting Functions through menu
+What is Parameterization?
+Run Time Settings and their impact on VU simulation
+Run Logic
+Pacing
+Log
+Think Times
+Speed Simulation
+Browser Emulation
+Proxy
+Using Transactions
+Transactions are mechanics to measure server response time for any operation. In simple words, the use of “Transaction” helps measure the time taken by the system for a particular request. It can be as small as a click of a button or an AJAX call upon losing focus from the text box.
+
+Applying transactions is straightforward. Just write one line of code before request is made to the server and close the transaction when the request ends. LoadRunner requires only a string as transaction name.
+
+To open a transaction, use this line of code:
+
+lr_start_transaction(“Transaction Name”);
+To close the transaction, use this line of code:
+
+lr_end_transaction(“Transaction Name”, <status>);
+The <status> tells LoadRunner whether this particular transaction was successful or unsuccessful. The possible parameters could be:
+
+LR_AUTO
+LR_PASS
+LR_FAIL
+Example:
+
+lr_end_transaction(“My_Login”, LR_AUTO);
+lr_end_transaction(“001_Opening_Dashboard Name”, LR_PASS);
+lr_end_transaction(“Business_Workflow_Transaction Name”, LR_FAIL);
+
+Points to note:
+
+Don’t forget, you are working with “C” and that is a case-sensitive language.
+Period (.) character is not allowed in transaction name, although you can use spaces and underscore.
+If you’ve branched your code well and added checkpoints to verify the response from the server, you can use custom error handling, such as, LR_PASS or LR_FAIL. Otherwise, you can use LR_AUTO and LoadRunner will automatically handle server error (HTTP 500, 400 etc.)
+When applying transactions, ensure there is no think_time statement being sandwiched or otherwise your transaction will always include that period.
+ Since LoadRunner requires a constant string as transaction name, a common problem when applying transaction is mismatch of string. If you give a different name when opening and closing a transaction, you will at least 2 errors.  Since the transaction you opened was never closed, LoadRunner will yield an error. Besides, the transaction you are trying to close was never opened, hence resulting an error.
+ Can you use your intelligence and answer to yourself which of the above error will be reported first? To validate your answer, why not make your own mistake? If you had answered right, you are on track. If you answered wrong, you need to focus.
+ Since LoadRunner automatically takes care of synchronization of requests and response, you will not have to worry about response when applying transactions.
+Understanding Think Time, Rendezvous Points and Comments
+Rendezvous Points
+Rendezvous Points means “meeting points”. It is just one line of statement that tells LoadRunner to introduce concurrency. You insert rendezvous points into VUser scripts to emulate heavy user load on the server.
+
+Rendezvous points instruct VUser to wait during test execution for multiple VUser to arrive at a certain point, so that they may concurrently perform a task. For example, to emulate peak load on the bank server, you can insert a rendezvous point instructing 100 VUser to deposit cash into their accounts at the same time. This can be achieved easily using rendezvous.
+
+If the rendezvous points are not places correctly, the VUser will be accessing different parts of the application – even for the same script. This is because every VUser gets different response time and hence few users lag behind.
+
+Syntax: lr_rendesvous(“Logical Name”);
+
+Best Practices:
+
+Prefix a rendezvous point with “rdv_” for better code readability; e.g. “rdv_Login”
+Remove any immediate think time statements
+Applying rendezvous points in a script view (after recording)
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+Comments
+Add comments to describe an activity, a piece of code or a line of code. Comments help make the code understandable for anyone referring to it in the future. They provide information about specific operation and separate two sections for distinction.
+
+You can add comments
+
+
+While recording (using tool)
+After recording (directly writing in code)
+Best Practice: Mark any comments on the top of each script file
+
+Inserting Functions through menu
+While you can directly write simple lines of code, you may need a clue to recall a function. You can also use Steps Toolbox (known as Insert Function prior to version 12) to find and insert any function directly into your script.
+
+You can find Steps Toolbar under View àSteps Toolbox.
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+This will open a side window, look at the snapshot:
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+What is Parameterization?
+A parameter in VUGen is a container that contains a recorded value that is replaced for various users.
+
+During the execution of the script (in VUGen or Controller), the value from an external source (like .txt, XML or database) substitutes the previous value of the parameter.
+
+Parameterization is useful in sending dynamic (or unique) values to the server, for example; a business process is desired to run 10 iterations but picking unique user name every time.
+
+It also helps in stimulating real-like behavior to the subject system. Have a look at below example:
+
+Problem examples:
+
+Business process works only for the current date which comes from the server, hence can’t be passed as a hardcoded request.
+
+Sometimes, the client application passes a Unique ID to the server (for example session_id) for the process to continue (even for a single user) – In such a case, parameterization helps.
+
+Often, the client application maintains a cache of data being sent to and from the server. As a result, server is not receiving a real user behavior (in case server runs different algorithm depending upon search criteria). While VUser script will execute successfully, the performance statistics drawn will not be meaningful. Using different data through parameterization helps emulates server side activity (procedures etc.) and exercises the system.
+
+A date that is hard-coded in the VUser during recording may no longer be valid when that date has passed. Parameterizing the date allows VUser execution to succeed by replacing the hard-coded date. Such fields or requests are the right candidates for parameterization.
+
+
+
+Click here if the video is not accessible 
+
+Run Time Settings and their impact on VU simulation
+Run Time Settings bear as much significant as your VUGen Script. With varying configurations, you can obtain different test designs. This is why, you may end up in non-repeatable results if Run Time Settings are not consistent. Let’s discuss each attribute one by one.
+
+Run Logic
+Run Logic defines the number of times all actions will be executed, except vuser_init and vuser_end.
+
+
+Probably this makes clearer why LoadRunner suggests keeping all the Login code within vuser_init, and Logout part in vuser_end, both exclusively.
+
+If you’ve created multiple actions, let’s say, Sign in, Open Screen, Calculate Rental, Submit Funds, Check Balance and logout, then, below scenario will take place for each VUser:
+
+All VUsers will login, execute Open Screen, Calculate Rental, Submit Funds, Check Balance – then – again Open screen, Calculate rentals…and so on – iterating 10 times – followed by logout (once).
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+This is a powerful setting enabling to act more like a real user. Remember, a real user does not login and logouts every time – he, usually, repeats same steps.
+
+How many times do you click “inbox” when checking you email before logout?
+
+Pacing
+This is important. Mostly people are unable to understand the different between pacing and think time. The only difference is, “pacing refers to the delay between iterations” whereas think time is the delay between any 2 steps.
+
+Recommended setting depends upon the test design. However, if you are looking to have aggressive load, consider opting “As soon as the previous iteration ends”
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+Log
+A log (as generally understood) is a bookkeeping of all events while you run LoadRunner. You can enable log to know what’s happening between your application and your server.
+
+LoadRunner gives powerful logging mechanism which is robust and scalable on its own. It allows you to keep only “Standard Log” or a detailed, configurable extended log or disable it altogether.
+
+A standard log is informative and easily understandable. It contains just the right amount of knowledge you will generally require troubleshooting your VUser scripts.  
+
+In the case of Extended Log, all the Standard log information is a subset. Additionally, you can have parameter substitution. This tells LoadRunner component to include complete information of all the parameters (from parameterization) including requests, as well as response data.
+
+If you include “Data Returned by Server” then your log will go in length. This will include all the HTML, tags, resources, non-resources information included right within the log. The option is good only if you need serious troubleshooting. Usually, this makes the log file very big in size and not easily comprehendible.
+
+As you could have guess by now if you opt for “Advance Trace”, your log file will be massive. You must give it a try. You will notice the amount of time taken by VUGen has also increased significantly, although this will have no impact on the transaction response time reported by VUGen. However, this is very advance information and maybe useful if you understand the subject application, the client to server communication between your application and hardware as well as protocol level details. Usually, this information is dead by essence since it requires extreme efforts to understand and troubleshoot.
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+    
+
+Tips:
+
+No matter how much time VUGen takes when log is enabled, it has no impact on the transaction response time. HP calls this phenomenon as “state of the art technology.”
+Disable log if it is not required.
+Disable log when you are finished with your scripts. Including scripts with logging enabled will cause controller to run slower and report nagging messages.
+Disabling log will increase the capacity of the maximum number of users you can simulate from LoadRunner.
+Consider using “Send message only when error occurs” – this will mute unnecessary information messages and report only error related messages.
+Think Times
+Think Time is simply the delay between two steps.
+
+
+Think Time helps replicates user behavior since no real user can use any application like a machine (VUGen). VUGen generates think time automatically. You still have complete control to remove, multiply or fluctuate the duration of think time.
+
+To understand more, for example, a user may open a screen (that is a response followed by a request) and then provide it is username and password before hitting enter. The next interaction of the application to the server will happen when he clicks “Sign In”. The time a user took to type his username and password is Think Time in LoadRunner.
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+If you are looking to simulate aggressive load on the application, consider disabling think time completely.
+
+However, to simulate a real like behavior, you can “User Random Think Time” and set the percentages as desired.
+
+Consider using Limit Think Time to a legitimate period. Usually, 30 seconds is fairly good enough.
+
+Speed Simulation
+Speed simulation simply refers to bandwidth capacity for each client machine.
+
+Since we are simulating thousands of VUser’s through LoadRunner, it is amazing how simple LoadRunner has made to control the bandwidth/network speed simulation.
+
+If you are customers access your application over 128 Kbps, you can control it from here. You will get to simulate “real like behavior” which should help getting the right performance statistics.
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+The best recommendation is to set to Use maximum bandwidth. This will help disregard any network related performance bottlenecks and focus on any potential issues in the application first. You can always run the test multiple times to see varying behavior under different circumstances.
+
+Browser Emulation
+User experience does not depend upon the browser an end user is using. Clearly, this is beyond the scope of Performance measures. However, you can choose which browser you wish to emulate.
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+Can you answer to yourself when exactly it will really matter for you to select the right browser in this configuration?
+
+You will use this configuration if you are subject application is a web application, returning different responses for different browsers. For example, you get to see different images and contents for IE and Firefox etc.
+
+Another important setting is Simulate browser cache. If you want to gauge the response time when cache enabled, check this box. If you are looking for worst case situation, this is obviously not a consideration.
+
+Download non-HTML resources will let LoadRunner download any CSS, JS and other rich media. This should be remained checked. However, if you which to eliminate this from your performance test design, you can uncheck this.  
+
+Proxy
+It is best to eliminate proxy completely from your Test Environment – this will make the test results unreliable. However, you might face situations where it is inevitable. In such a situation, LoadRunner does facilitate you with proxy settings.
+
+You will be working (or should be working) with No proxy setting. You can obtain it from your default browser. However, don’t forget to check which browser is set to default and what proxy configuration for default browser is.
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+If you are using a proxy and it requires authentication (or a script) then you can click on the Authenticate button which leads to a new window. Refer to below screenshot.
+
+Advance VUGEN: Pamaretization, Transactions,  Functions, Run Time Setttings
+
+Use this screen to provide username and password to get authenticated on the proxy server. Click OK to close the screen.
+
+Congratulations. You are done with configuration your VUGen script. Don’t forget to configure it for all your VUser scripts.
+
+Correlation in LoadRunner with Web_Reg_Save_Param Example
+
+What is Correlation?
+Correlation, as the name suggests, is a mechanism of defining a relationship between two variables or entities. A Dictionary defines it as “statistical relation between two or more variables such that systematic changes in the other accompany systematic changes in the value of one variable”.
+
+In this tutorial, we will learn about
+
+Why do we need Correlation?
+Automatic correlation
+Manual correlation
+Understanding Web_reg_save_param function
+Why do we need Correlation?
+Let’s understand co-relation with the following scenario.
+
+Consider you are recording a script using LoadRunner.
+
+Client-Server Communication
+
+During Record,the client sends a request to the server to start a session
+A Server receives the request and allocates a new session ID ABC
+Client stores the session id ABC in the script.
+Client start the session with ID ABC and send a request to a server to allow it to record
+The Server recognizes the ID ABC and allows the client to record the script
+Correlation in Loadrunner: Ultimate Guide
+
+Now, let’s study the client-server communication during replay
+During Replay, a client sends a request to the server to start a session
+A Server receives the request and allocates a new session ID XYZ
+A Client start the session with previously recorded session ID ABC and send request to server to allow it to record
+A Server is unable to identify the ID ABC as it was expecting ID XYZ that it has allocated and session fails.
+Correlation in Loadrunner: Ultimate Guide
+
+We need a solution, which to capture parse the dynamic value sent at run-time and return this value back to server. Here is how the client-server communication will look like with this solution
+
+During Replay, a client sends a request to the server to start a session
+A Server receives the request, and allocates a new session ID ZZZ
+A Client parses this new session id ZZZ from the request.
+A Client sends a request to start session with id ZZZ
+A Server recognizes the ID ZZZ and allows client to replay the script
+Correlation in Loadrunner: Ultimate Guide
+
+This is nothing but correlation.
+
+
+
+Click here if the video is not accessible 
+
+In case of VUGen, correlation is a binding relationship between a response and any preceding request.
+
+There are various situations when a request is based on a previously received response from the server, such as, a Session ID, server date/time which is fetched from server. These values are different every time you run an application or record a script. Obviously, if the execution of script depends upon a value returned by the server, it means you need to find a mechanism where you can “catch” the server response and attach to those requests which server expects. This is typically called Correlation in LoadRunner.
+
+In simple words, the solution by using Correlation is:
+
+Capture output value from a step
+Use above captured value to serve as input to all subsequent steps
+Correlation is classified into 2 categories in VUGen/LoadRunner:
+
+Automatic correlation
+Manual correlation
+Automatic Correlation
+LoadRunner provides a mechanism to easily perform correlation in automatic fashion.
+
+VUGen will require you to run a recorded script at least two times so it can internally compare the varying values in the server response.
+
+Automatic correlation can be classified into 3 categories:
+
+Auto-Detect Correlation
+Rule-Based Correlation
+Correlating All Statements
+Rule Name	When to Use
+Auto-detect Correlation	Detect and correlate dynamic data for application servers supported by HP LoadRunner
+Rule-Based	Used when working with a non-supported application server for which the context is known.
+Correlate All	Helps correlate all dynamic data in blind fashion.
+Though Automatic Correlation seems simpler, it can be error-prone and works in not more than 5% of the cases. It is always advisable to use manual correlation.
+
+
+To configure automatic correlation at the time of recording, perform below configuration in Record Time Setting after a script has been recorded.
+
+Click on Record =>Recording Options (or click Ctrl +F7),
+
+>Correlation in Loadrunner: Ultimate Guide
+
+Below window will open:
+
+Correlation in Loadrunner: Ultimate Guide
+
+Click on Correlation =>Configuration – below window will open.
+
+Correlation in Loadrunner: Ultimate Guide
+
+Here, you need to mark as checked against all applications (ASPNET) etc., which are used in your subject application. On the right-hand side, you can see the rules which will detect possible candidates for correlation e.g. _VIEWSTATE. You can also add more applications or custom rules by clicking on New Rule button.
+
+You can also click on RULES, you will see as below:
+
+Correlation in Loadrunner: Ultimate Guide
+
+In order for Automatic Correlation to work, you need to ensure Rules Scan is marked as checked. If you click on automatically correlate values found, VUGen will not prompt you with the choice once a correlation candidate is found, instead, it will just correlate them.
+
+We will understand API used for correlation later. However, it is advisable to use HTML comparison instead of text comparison.
+
+Once you’ve selected any rules, click on OK button to close the windows.
+
+Click on Correlation in Loadrunner: Ultimate Guidefrom menu and VUGen will regenerate script (without having to record) with new configurations. VUGen will automatically add a required piece of code to handle correlation. We will look at the sample in more detail in Manual Correlation.
+
+Please note, if you perform correlation manually or use automatic correlation, the piece of code will contain exactly same syntax and function.
+
+Steps to auto-correlate a script:
+
+Record a script
+Replay script
+Identify the values to be correlated
+Select the values and click the auto-correlate button
+Verify the script by running again. A successful run means successful correlation.
+Tip:
+
+Correlation helps run your script with different values
+Correlation also reduces the size of your script
+Manual Correlation
+Manual correlation is about writing code directly into your script to cater for ever-changing values. We can split it into below steps:
+
+Determine the value to capture
+Find the right and left text boundaries of the value to capture (WEB)
+Find which occurrence of the text boundaries should be used
+Add a web_reg_save_param function to the script, above the piece of code which requests the page with the value to capture
+Add a parameter name, left boundary, the right boundary, and occurrence to the function
+Parameterize the dynamic value in the script every time it occurs
+Verify correct execution
+web_reg_save_param (" OracleAppJSESSIONID3",
+	"LB/IC=JSESSIONID=",
+	"RB/IC=;",
+	"Ord=l",
+	"Search=headers",
+	"RelFrameId=l",
+	LAST);
+
+web_reg_save_param("Siebel_Analytic_ViewState2",
+	"LB/IC=ViewState\" value=\"",
+	"RB/IC=\"",
+	"Ord=1",
+	"Search=Body",
+	"RelFrameId=l",
+	LAST);
+Manual correlation can be done by VUser Comparison. Steps in VUser Comparison method of Correlation can be split as below:
+
+Identify Dynamic values that need to be correlated
+Find Servers response containing the Dynamic value
+Capture the Dynamic value in a parameter
+Replace every occurrence of the Dynamic value with the parameter
+Verify Changes
+Understanding Web_reg_save_param function
+VUGen provides multiple functions or APIs to correlate candidates, including:
+
+web_reg_save_param
+web_reg_save_param_ex
+web_reg_save_param_regexp
+web_reg_save_param_xpath
+While a brief introduction is being provided here, for a detailed understanding of functions and their parameters, open VUGen, write function (or use Steps Toolbox), move a cursor on the function and click F1 – get yourself acquainted with VUGen help and make a habit. You will have to deal with it a lot when working in the industry.
+
+Here we go with the function details:
+
+web_reg_save_param(Parameter Name , Left Boundary , Right Boundary )
+
+List of Attributes
+
+Convert: The possible values are:
+
+HTML_TO_URL: convert HTML-encoded data to a URL-encoded data format
+
+HTML_TO_TEXT: convert HTML-encoded data to plain text format; this attribute is optional.
+
+
+Ignore Redirections: If "Ignore Redirections=Yes" is specified and the server response is redirection information (HTTP status code 300-303, 307), the response is not searched. Instead, after receiving a redirection response, the GET request is sent to the redirected location, and the search is performed on the response from that location.
+
+This attribute is optional. The default is "Ignore Redirections=No".
+
+LB: The left boundary of the parameter or the dynamic data. If you do not specify an LB value, it uses all of the characters from the beginning of the data as a boundary. Boundary parameters are case-sensitive. To further customize the search text, use one or more text flags. This attribute is required. See the Boundary Arguments section.
+
+NOTFOUND: The handling option when a boundary is not found, and an empty string is generated.
+
+"Not found=error", the default value, causes an error to be raised when a boundary is not found.
+
+"Not found=warning" ("Not found=empty" in earlier versions), does not issue an error. If the boundary is not found, it sets the parameter count to 0 and continues executing the script. The "warning" option is ideal if you want to see if the string was found, but you do not want the script to fail.
+
+Note: If Continue on Error is enabled for the script, then even when NOTFOUND is set to "error", the script continues when the boundary is not found, but an error message is written to the extended log file.
+
+This attribute is optional as well.
+
+ORD: Indicates the ordinal position or instance of the match. The default instance is 1. If you specify "All," it saves the parameter values in an array. This attribute is optional.
+
+Note: The use of Instance instead of ORD is supported for backward compatibility, but deprecated.
+
+RB: The right boundary of the parameter or the dynamic data. If you do not specify an RB value, it uses all of the characters until the end of the data as a boundary. Boundary parameters are case-sensitive. To further customize the search text, use one or more text flags. This attribute is required. See the Boundary Arguments section.
+
+RelFrameID: The hierarchy level of the HTML page relative to the requested URL. The possible values are ALL or a number. Click RelFrameID Attribute for a detailed description. This attribute is optional.
+
+Note: RelFrameID is not supported in GUI level scripts.
+
+SaveLen: The length of a sub-string of the found value, from the specified offset, to save to the parameter. This attribute is optional. The default is -1, indicating to save to the end of the string.
+
+SaveOffset: The offset of a sub-string of the found value, to save to the parameter. The offset value must be non-negative. The default is 0. This attribute is optional.
+
+Search: The scope of the search-where to search for the delimited data. The possible values are Headers (Search only the headers), Body (search only body data, not headers), No resource (search only the HTML body, excluding all headers and resources), or ALL (search body, headers, and resources). The default value is ALL. This attribute is optional but generally preferred.
+
+Loadrunner Controller Tutorial: Manual & Goal Oriented Scenario
+
+What is Controller?
+Controller, as the name suggests, is a program to “control” overall load test. It is responsible for helping you run your performance test design using the VUGen scripts you’ve already created. It lets you over-ride run-time settings, enable or disable think time, rendezvous points, adds load generators and controls the number of users each generator can simulate. It automatically creates a dump of execution results, gives you a live view of “current state” of load test running.
+
+In this tutorial, you will learn-
+
+How to Launch Controller
+Simulating a Manual Scenario
+Simulating a Goal-Oriented Scenario
+Configure Load Generators
+Schedule a Group
+Set-up the SLA(Service Level Agreement)
+
+Let’s learn more about HP Controller.
+
+How to Launch Controller
+To launch HP Controller, go to Start Menu ->HP Software ->HP LoadRunner ->Controller as demonstrated below:
+
+How to use Controller in LoadRunner
+
+After you’ve launched, you’ll see a splash screen appearing momentarily. A quick snap has been displayed below:
+
+How to use Controller in LoadRunner
+
+The snapshot will automatically lead to the main window of HP Controller. Let’s have a look at it before we discuss main components of the screen.
+
+How to use Controller in LoadRunner
+
+If the “New Scenario” screen doesn’t come up automatically, (after you’ve changed the preference) you can click on New button under File Menu or click on How to use Controller in LoadRunner button from the toolbar. Alternatively, you can click Ctrl + N. The menu has been displayed below for reference.
+
+How to use Controller in LoadRunner
+
+Similarly, to open an existing or previously created scenario you can use Ctrl + O or How to use Controller in LoadRunner icon, and it will open a standard dialogue box to browse files. The extension of a Load Runner Scenario file is *.lrs
+
+There are two types of scenarios in Controller.
+
+Manual Scenario
+Goal-Oriented Scenario
+Manual Scenario can further or may not have Percentage Mode. We will discuss each in detail.
+
+Simulating a Manual Scenario
+A manual scenario is static and gives more control over the situation. You can decide which transaction to execute, for how many of times, for how long.
+
+Based on the composition of test mix, you can see application behaviour such as number of hits, response time, etc.
+
+You will find out how a manual scenario is different from Goal Oriented scenario later.
+
+In order to create a Manual Scenario, select Manual Scenario from “Select Scenario Type”
+
+
+For now, let’s use non-percentage mode, to begin with. Have a look at the snapshot illustrated below:
+
+How to use Controller in LoadRunner
+
+You can select the scripts you wish to add to the scenario right from the above screen. However, it is generally practiced to add the scripts later. 
+
+Click the OK button to proceed.
+
+This will create a blank scenario and load it into the main screen. You will notice the Save button is enabled now. Have a look at the snapshot below:
+
+How to use Controller in LoadRunner
+
+Likewise, if you selected Percentage Mode while selecting type of scenario, the screen will appear slightly differently. Instead of number of users, it will show the distribution of users in percentage. Controller distributes users per assigned percentage automatically.
+
+The rest is same. Refer to snapshot below:
+
+How to use Controller in LoadRunner
+
+If you do not create a Scenario at the start, you will notice the toolbar as below:
+
+How to use Controller in LoadRunner
+
+You can click on How to use Controller in LoadRunner button to create a new blank Scenario. Once a scenario has been created, you can click on How to use Controller in LoadRunner button to Save a scenario or click Ctrl + S. Likewise, you can click on How to use Controller in LoadRunner button to open an already existing scenario from your local computer drive.
+
+The remaining button simply invokes other components of LoadRunner. The How to use Controller in LoadRunner button invokes VUGen and How to use Controller in LoadRunner button invokes HP analysis.
+
+Once you add a VUSer script or group, you will notice the subject toolbar will show additional icons. The new toolbar will look like this:
+
+How to use Controller in LoadRunner
+
+The new toolbar has 2 additional controls.
+
+The How to use Controller in LoadRunner button opens the list of all Load Generators. In our case, we’re using “localhost” as a generator. This means that your local machine will be used by Controller as well as Generator to simulate virtual user load. The Network Virtualization Settings can be opened by clicking on How to use Controller in LoadRunner icon. Network Virtualization requires Shunra NV for HP Software version 8.6 or higher installed in your machine. This integration enhances test accuracy by virtualizing production network conditions in the load and performance test environment. To incorporate Shunra NV for HP Software into your test environment, contact your HP service representative.
+
+Now that you’ve created a new, blank LoadRunner Scenario, please make a note of
+
+Default configurations of a new scenario:
+
+
+Scheduled by: Scenario
+
+Run Mode: Real World schedule
+
+Since a VUsers script will be run by a group of VUsers, hence it is called a Group as well. The Group Name column will show the name of VUser Script once added. Let’s add our VUsers scripts into this scenario.
+
+When a scenario is completely created, you will see below toolbar under Scenario Groups:
+
+How to use Controller in LoadRunner
+
+You can click on the How to use Controller in LoadRunner icon in the toolbar to add a VUser Group.
+
+When you click on a cell under Group Name column, it will open a small box i.e. How to use Controller in LoadRunner – here you can see a quick list of recent VUser Scripts as well as Browse button. Refer to below screenshot.
+
+How to use Controller in LoadRunner
+
+You can select from the list or simply browse from desired directory. If you click the browse button, it opens a dialogue box similar to MS common dialogue box. Refer to below snapshot:
+
+How to use Controller in LoadRunner
+
+As you can see, you can browser VUser Scripts, GUI Scripts or QTP Scripts here. Please remember, a GUI or QTP script can only instantiate single user and cannot be used for “load simulation”. Can you tell yourself why a QTP script is available in Load Scenario?
+
+The Correct answer is, QTP scripts can be added to Load Scenario for to extract information:
+
+Since LoadRunner script works based on request and response, this doesn’t include UI and data rendering duration. A QTP script will give 1 sample of Real user experience under load. Of course, the QTP script needs to have all the transactions applied through descriptive programming.  
+
+If you right-click on the grey area on the left, you will see a small menu appearing as in below screenshot:
+
+How to use Controller in LoadRunner
+
+You can click on the Add Group to browse your VUser script.
+
+To remove a group, click on How to use Controller in LoadRunner button in the tool bar or right click on the group and select Remove Group – as shown below:
+
+How to use Controller in LoadRunner
+
+Tip: You can also click on How to use Controller in LoadRunner button to view Run Time Settings specific to the selected group. You can select multiple groups (by holding Ctrl + click) to apply Run Time Settings to selected groups at a time.
+
+
+From the toolbar, you can click on Details button [How to use Controller in LoadRunner ] in toolbar to view all details pertaining to a VUser Group.
+
+How to use Controller in LoadRunner
+
+If you click More, it will show you a panel with 3 tabs. 1st tab, Rendezvous, will open by default:
+
+How to use Controller in LoadRunner
+
+You can also see the VUsers a list in Vusers tab. If you’ve assigned IDs to VUsers, you’ll see them here.
+
+How to use Controller in LoadRunner
+
+You can also see list of all files in the Script folder. This helps to navigating all the way to the end directory and see only relevant files.
+
+How to use Controller in LoadRunner
+
+We will study how to Schedule a group separately.
+
+Once your scenario is ready, you can click on How to use Controller in LoadRunner button to start executing your scenario. Once you click the play button, you will notice the Controller switches from Design tab to Run tab.
+
+ Controller design the view also gives view a script as you run the scenario. This is helpful when you face errors. However, any changes you make in the script will not be reflected the running scenario. Even when the scenario is not running, you need to view the details and click on REFRESH button for changes to take effect.
+
+You can view a script directly from Controller by clicking on How to use Controller in LoadRunner button.
+
+Likewise, you can see the current VUsers (yes, you can actually view them) by clicking on How to use Controller in LoadRunner button.
+
+Once you’re good with configuration, you can hit the How to use Controller in LoadRunner button or go to Running tab and click on How to use Controller in LoadRunner button.
+
+At the start of execution of the scenario, Controller will implicitly create a temporary directory to dump the results. If the directory already exists, you will get a prompt:
+
+How to use Controller in LoadRunner
+
+If you select Yes, the previous dump will be lost. If you select No, you will see below window. You can opt to create a new directory for each result if you wish. However, consider running out of space shortly after that.
+
+How to use Controller in LoadRunner
+
+As soon as you hit OK, your scenario will start running. You will see users moving from Pending to Init columns and so on.
+
+This is how an example execution will look like:
+
+How to use Controller in LoadRunner
+
+You can click on the Passed Transactions that opens a new window. Here you can check the status of transactions which you’ve applied throughout your scripts.
+
+Similarly, you can click on any graph name on the left to open any graph.
+
+In the bottom of the window, you can see which Transactions are passing, the minimum time taken by any user thus far, the maximum time, average time and standard deviation.
+
+You can choose to collate results side by side or only after the end of scenario completion. For toggle, click on the Results menu and you will find below menu.
+
+How to use Controller in LoadRunner
+
+If you’ve wished to enable collation, you can keep it checked.
+
+Simulating a Goal-Oriented Scenario
+A Goal-Oriented scenario is dynamic in nature – this means, it keeps changing the overall load being simulated over the server. You set a Goal, for example, the maximum number of hits you wish to achieve for the target server, maximum response time against a transaction etc.
+
+Based on above numeric, you can draw analytics such as a maximum number of users your application support while staying between acceptable response time. Similarly,The maximum number of users connected to application till X number of hits to the server is reached.
+
+In such a case, HP Controller automatically varies the number of users to the server, thus, you’ve little control over how many numbers of times or for how long a user runs.
+
+Click New to create a new scenario and select Goal-Oriented Scenario.
+
+The following screen will appear:
+
+How to use Controller in LoadRunner
+
+Process of adding VUser Groups is exactly same as in case of Manual Scenario.
+
+The key differences in Goal Oriented Scenario, as the name suggests, is to create a goal. The Controller will automatically
+
+While most of the interface is pretty much similar to Manual Scenario, certain screen appears differently, although perform the same actions. For example, to add a VUser Group or a VUser Script, click on the How to use Controller in LoadRunner button. This will lead to below window:
+
+How to use Controller in LoadRunner
+
+Here you can select recent scripts, browser a script or hit the Record button to create a new script.
+
+Click OK to close the window.
+
+Per need, you can click How to use Controller in LoadRunner button to view the details of selected group/VUser Script.
+
+Clicking How to use Controller in LoadRunner button will remove the selected VUser Group from the current scenario. The changes will be saved only if you save.
+
+Clicking How to use Controller in LoadRunner button will open the Run Time Settings, as we studied in  VUGen. However, if you override (or modify) the Run Time Settings here, the changes will be effective only for the current scenario. If you remove the script and reload, or hit refresh (in Details View), you will lose any changes made. This will reload the Run Time Settings saved while creating the script.
+
+You can also click on How to use Controller in LoadRunner button to open select VUser Group in VUGen.
+
+If you wish to configure Load Generators (our next topic) you can click on How to use Controller in LoadRunner button.
+
+Execution of a Goal-Oriented Scenario is same as Manual Scenario.
+
+Configure Load Generators
+There are two ways to configure Load Generators.
+
+When you click Add Group ( to add a VUser Script), you will see below window:
+
+How to use Controller in LoadRunner
+
+You can click on Add corresponding to Load Generator Name and browse your Load Generators, or alternative, you can simply a type “localhost” and start using your controller machine as Load Generator.
+
+If you click on “add…”, you will see below window:
+
+How to use Controller in LoadRunner
+
+You can click on More to see more settings related to Load Generator. Navigate through different tabs to build more understanding:
+
+How to use Controller in LoadRunner
+
+The above were configurations to Run-Time Settings. As you can see, a maximum of 50 users can be initialized at one time.
+
+Below is configuration of VUser Limit.
+
+How to use Controller in LoadRunner
+
+Click Defaults if you wish to revert to default settings and lose any changes you’ve made. Click OK button to save changes and close window.
+
+Another way of adding and configuring Load Generators is by clicking Scenario menu and click Load Generators.
+
+How to use Controller in LoadRunner
+
+This will lead to main window of Generators. Here you can see the status of all Load Generators.  The name refers to the name of the Generator. The Status is the current status, whether or not the generator is ready to be used. The Platform tells the Operating System of the generator which can be Windows or Unix only. The Type tells whether it’s local or Cloud based generator. Have a look at the below snapshot:
+
+How to use Controller in LoadRunner
+
+To add another generator, you need to click on Add button. Once you click add, you will see the same screen as already discussed above.  
+
+Once generator has been configured, click Close button to close the screen.
+
+Schedule a Group
+Before you run your scenario, you need to configure schedule. Either you schedule by Scenario or by Group. Each of these, can further be categorized by Real-world Schedule or Basic Schedule, called Run Mode.
+
+If you schedule by Scenario and create a Real-World Schedule, you will see below options appearing in Global Schedule area:
+
+How to use Controller in LoadRunner
+
+However, if you schedule a Scenario and create a Basic schedule, you will see below window. Can you find difference?
+
+How to use Controller in LoadRunner
+
+You can also Schedule by Group. This will apply the configuration to group level. This can further be categorized as Real-world and Basic Run Mode.
+
+How to use Controller in LoadRunner
+
+Likewise, you can change the Run Mode to Basic Schedule. Use your Test Designing skills to find the difference between the two. Here is a reference:
+
+How to use Controller in LoadRunner
+
+Did you notice a new icon appearing in the Scenario Schedule toolbar?
+
+Here it is for your reference: How to use Controller in LoadRunner
+
+The Rendezvous icon is appearing only in case of Group configurations.
+
+Set-up the SLA(Service Level Agreement)
+You may have signed a Service Level Agreement with your customers. The SLA in LoadRunner or Controller gives an opportunity to you to test your application against an SLA. Keep in mind, a regular (non-SLA) scenario gives you the opportunity to run various types of scenario in order to find the problems and root cause of problems;  whereas, your customers might like to simply test your application under an SLA to see whether it works assigned in contract or not.
+
+From the main Design View of Controller, find the SLA toolbar; that is on the right top corner and looks like this:
+
+How to use Controller in LoadRunner
+
+Click the How to use Controller in LoadRunner button and following window will open up:
+
+How to use Controller in LoadRunner
+
+Click the How to use Controller in LoadRunner button.
+
+Notice the new window. Here you can select the Measurement of the SLA. In our example, we’re taking Transaction Response Time. Have a look:
+
+How to use Controller in LoadRunner
+
+Click the How to use Controller in LoadRunner button.
+
+In the next window, you can select the Transactions where the above Measurement will be applied. We’re using only main transaction i.e. 01_Signup
+
+This will help remove opening main page and other not so important transactions to be excluded.
+
+Have a look at the window:
+
+How to use Controller in LoadRunner
+
+Click the How to use Controller in LoadRunner button.
+
+In the new window, you can select the percentile of the threshold value. If you’ve selected multiple transactions, you can click How to use Controller in LoadRunner button. Have a look at the below window:
+
+How to use Controller in LoadRunner
+
+Click the How to use Controller in LoadRunner button.
+
+The next screen is a plain closure. Click the How to use Controller in LoadRunner button to close the SLA.  
+
+How to use Controller in LoadRunner
+
+After you click How to use Controller in LoadRunner, you will see the main, Design Window of Controller with an SLA appearing. Have a look:
+
+How to use Controller in LoadRunner
+
+You can click on the How to use Controller in LoadRunner buttons to view SLA details. The Following window will open up:
+
+How to use Controller in LoadRunner
+
+Click How to use Controller in LoadRunner button to close the above window.
+
+If you wish to delete an existing SLA, you can click on the How to use Controller in LoadRunner button. Upon clicking, you will get to see below confirmation message:
+
+How to use Controller in LoadRunner
+
+If you click on the How to use Controller in LoadRunnerbutton, you will see Advance options of an SLA.
+
+It is advisable that you work with default option i.e. Internally Calculated Tracking Period. Have a look at the snapshot:
+
+How to use Controller in LoadRunner
+
+If you work with Internally Calculated Tracking Period, Analysis automatically sets the tracking period at which SLA statuses will be determined. This option has minimum tracking period set to 5 seconds.
+
+On the other hand, you select Tracking Period to the desired number of seconds. Simply select the next radio button.
+
+When executing an SLA based scenario, the execution process remains exactly the same.
+
+Video on Controller
+
+
+
+Click here if the video is not accessible 
+
+LoadRunner Analysis Tutorial: Report & Graph
+
+In this tutorial, we will study following topics-
+
+1. How to use Analysis in LoadRunner
+2. LoadRunner Analysis Summary Report
+3. Analysis Graphs
+4. Merging Graphs
+5. Add New Graphs
+6. Crossing with Results
+7. Saving a Session
+Let's begin-
+
+1. How to use Analysis in LoadRunner
+HP Analysis, as the name suggests, is a program to perform detailed (literally, very detailed) analysis on the performance test you’ve carried out.
+
+HP Analysis takes the dump created by Controller, during execution of your load test. The dump contains all the information in a raw format which is parsed by HP Analysis to generate various graphs.
+
+Let’s learn more about HP Analysis.
+
+To launch HP Analysis, go to Start Menu =>HP Software =>HP LoadRunner =>Analysis as demonstrated below:
+
+How to use Analyzer in LoadRunner
+
+This will launch Analysis. As usual, at first a splash screen will open as shown below:
+
+How to use Analyzer in LoadRunner
+
+After a moment, this splash screen will automatically lead to the main screen of HP Analysis. The main screen will open in restored mode. Refer to below snapshot:
+
+How to use Analyzer in LoadRunner
+
+Click on the File menu and you will see a list of menus as in below snapshot:
+
+How to use Analyzer in LoadRunner
+
+Click on the File Menu or use Ctrl + N to open create analysis session. This will open a dialogue box to help you locate the lrr file. The file extension, LRR stands for LoadRunner Results.
+
+Remember HP Controller creates a repository of results in a folder? That folder contains the lrr file.
+
+Locate the res folder of the scenario for which you wish to create analysis session. A snapshot has been provided below for reference:
+
+How to use Analyzer in LoadRunner
+
+As soon as you select the correct file, HP Analysis will first check for available disk space to ensure you don’t run out of space during the process. This is because the size of a session can be very large especially for complex scenario where you’ve included multiple VUScripts and run for long hours.
+
+Below window will open momentarily:
+
+How to use Analyzer in LoadRunner
+
+
+Immediately after affirming availability of disk space, HP Analysis will come to action and you will see a “currently analyzing” window, as shown below:
+
+How to use Analyzer in LoadRunner
+
+The time taken by above window depends upon the size of result folder (or statistics contained in that folder)
+
+If it takes way too long, or gets stuck, you can opt to cancel by clicking on the cancel button.
+
+Once finished, this will automatically lead to a quick window where format template will be applied:
+
+How to use Analyzer in LoadRunner
+
+This should quickly lead you to main window of Session Explorer. However, if you’re using some complex custom template and the operation halts for any reason, you can click on the Stop button to cancel the operation and start over.
+
+2. LoadRunner Analysis Summary Report
+Once the operations completes, you will see main session window which looks something like this:
+
+How to use Analyzer in LoadRunner
+
+Here you can see the directory where you picked up the results from.
+
+You can also see complete information about your scenario within Analysis session. In the Summary Report tab, you can see the duration of the scenario which was run to get these results.
+
+The term percentile is used in analysis almost with every graph. You can define the value for percentile in the properties panel. The default is set to 90.
+
+How to use Analyzer in LoadRunner
+
+Notice the graph section in Session Explorer:
+
+How to use Analyzer in LoadRunner
+
+Few graphs appearing already. You can click on the graph name and you will see its details appearance.
+
+From the Summary Report, you can click on the button to open its SLA related information, if available.
+
+Upon clicking, you will see the below window:
+
+How to use Analyzer in LoadRunner
+
+
+You can locate the toolbar just below File menu on the top, it looks like this:
+
+How to use Analyzer in LoadRunner
+
+All the buttons in the toolbar perform some action from within the File menu.
+
+HP Analysis contains every bit of information about your scenario, including Run time Settings. As you’re aware by now that Run Time Settings have significant impact on performance, you can view the settings from within Analysis which were used to run the scenario.
+
+To view the Run Time Settings, click onHow to use Analyzer in LoadRunner from the File Menu or How to use Analyzer in LoadRunnerbutton from the toolbar.
+
+The Run Time Settings will be displayed as below:
+
+How to use Analyzer in LoadRunner
+
+As you can see, not only all the settings can be seen from within this window, you can also open the Schedule by clicking on How to use Analyzer in LoadRunnerbutton or view script by clicking on How to use Analyzer in LoadRunnerbutton. To close the window, click on How to use Analyzer in LoadRunner button.
+
+3. Analysis Graphs
+HP Analysis will load most important graphs at the time of Analysis. You can click on any graph name from the Session Explorer to view details against available graph.
+
+Let’s discuss few graphs one by one.
+
+3.1 Average Response Time graph:
+This graph displays the number of hits made on the Web server by VUsers during each second of the load test. This graph helps you evaluate the amount of load VUsers generate, in terms of the number of hits.
+
+Have a look at graph of our scenario: How to use Analyzer in LoadRunner
+
+When viewing a graph, it is pivotal to understand the graph legend side by side.
+
+The Legend shows the transaction name, its color, minimum value, average value, maximum value and standard deviation (variance around the mean).
+
+The colors of the graph can be recognized from the Legend.
+
+3.2 Hits Per Second graph:
+This graph displays the number of hits made on the Web server by VUsers during each second of the load test. This graph helps you evaluate the amount of load VUsers generate, in terms of the number of hits.
+
+Have a look at the graph in case of our scenario:
+
+How to use Analyzer in LoadRunner
+
+As can be seen from graph as well as legend, that there were times where there were no hits to the server.
+
+
+3.3 Running VUsers graph:
+This graph displays the number of VUsers that executed VUser scripts, and their status, during each second of a load test. This graph is useful for determining the VUser load on your server at any given moment.
+
+How to use Analyzer in LoadRunner
+
+3.4 Throughput graph
+This graph displays the amount of throughput (in bytes) on the Web server during the load test. Throughput represents the amount of data that the VUsers received from the server at any given second. This graph helps you to evaluate the amount of load VUsers generate, in terms of server throughput.
+
+How to use Analyzer in LoadRunner
+
+Here is description to some more graphs:
+
+3.5 VUser Summary:
+This graph displays the number of VUsers that completed their run successfully, stopped their run, or ended with errors. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.6 Rendezvous graph:
+This graph Indicates when VUsers were released at rendezvous points and how many VUsers were released at each point. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.7 Transactions Per Second graph:
+This graph displays the number of completed transactions (both successful and unsuccessful) performed during each second of a load test. This graph helps you determine the actual transaction load on your system at any given moment. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.8 Total Transactions Per Second graph:
+This graph displays the total number of completed transactions (both successful and unsuccessful) performed during each second of a load test. This graph helps you determine the actual transaction load on your system at any given moment. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.9 Transaction Summary graph:
+This graph displays the number of transactions that passed, failed, stopped, or ended with errors. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.10 Transaction Performance Summary graph:
+This graph displays the minimum, average, and maximum response time for all the transactions in the load test. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.11 Transaction Response Time Under Load graph:
+Displays average transaction response times relative to the number of VUsers running at any given point during the load test. This graph helps you view the general impact of VUser load on performance time and is most useful when analyzing a load test which is run with a gradual load. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.12 Transaction Response Time Percentile graph:
+This graph displays the percentage of transactions that were performed within a given time range. This graph helps you determine the percentage of transactions that meet the performance criteria defined for your system. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.13 Transaction Response Time Distribution graph:
+This graph displays the number of times a transaction was completed over a distribution of time ranges. Note that this graph only displays information for a single transaction at a time. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.14 Throughput (MB) graph:
+This graph displays the amount of throughput (in megabytes) on the Web server during the load test. Throughput represents the amount of data that the VUsers received from the server at any given second. This graph helps you to evaluate the amount of load VUsers generate, in terms of server throughput. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.15 HTTP Status Code Summary:
+This graph displays the distribution of the various HTTP protocol status codes returned from the Web Server during the load test. This is how it looks like:
+
+4 How to use Analyzer in LoadRunner
+
+3.16 HTTP Response Per Second graph:
+This graph displays the number of the different HTTP status codes returned from the Web server during each second of the load test. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.17 Pages Download Per Second graph:
+This graph displays the number of pages received from the Web server during the load test. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.18 Connections graph:
+This graph displays the number of Connections. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.19 Connections Per Second graphs:
+This graph displays the number of Connections per Second. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.20 Page Component Breakdown (Over Time) graph:
+This graph displays the average response time (in seconds) for each Web page and its components during each second of the scenario run. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.21 Page Download Time Breakdown (Over Time) graph:
+This graph displays a breakdown of each page component's download time during each second of the scenario run. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+3.22 Time to First Buffer graph:
+This graph displays each Web page component's relative server/network time (in seconds) during each second of the scenario run, for the period of time until the first buffer is successfully received back from the Web server. This is how it looks like:
+
+How to use Analyzer in LoadRunner
+
+4. Merging Graphs
+Two graphs may be required to be merged to bring more meaningful information. For example, as we discussed above in graphs that when there were no hits to the server, there was also no bandwidth over the network.
+
+This can be more easily drawn when merging.
+
+Let’s see how graphs are merged.
+
+Before you open the graph merging option, ensure you have at least one graph opened already, which you wish to merge. The utility will assume you want to add another graph to the already opened graph.
+
+To open the merge graph window, go to View menu and click on Merge Graphs. Here is how the menu looks like:
+
+How to use Analyzer in LoadRunner
+
+Clicking above menu will open the main window of merging graphs, here is a snapshot:
+
+How to use Analyzer in LoadRunner
+
+ 
+Here, we’re merging Transaction Response Time with Running VUsers graph. The Merge Graph window requires you to provide the name of newly formed merged graph.
+
+Here is how this merged graph looks like:
+
+How to use Analyzer in LoadRunner
+
+5. Add New Graphs
+To add new graph, click on the Graph menu and select Add New Graph.
+
+Refer to below snapshot of the Menu:
+
+How to use Analyzer in LoadRunner
+
+:
+
+Once clicked, it will open a list of all graphs available in LoadRunner (HP Analysis)
+
+You can select any graph by double-clicking on its name. This will load the graph with values/statistics to the main window of HP Analysis.
+
+Click the Close button to go back to the main window.
+
+Let’s have a look at the window:
+
+How to use Analyzer in LoadRunner
+
+6. Crossing with Results
+If you’ve multiple scenario runs already, you can use their results folder to cross match the statistics. This process helps directly compare both results and generate a cumulative report.
+
+In order to perform Cross results, click onHow to use Analyzer in LoadRunnericon from the toolbar or click Cross with Results from the File Menu.
+
+This will open window:
+
+How to use Analyzer in LoadRunner
+
+The Result List is showing your current results folder (for which the analysis is being performed)
+
+You can click on the Add button to add another result folder with which a cross will be analyzed.
+
+How to use Analyzer in LoadRunner
+
+Select the other result folder and click on Open.
+
+The previous Results List window will be open again. This time you will have two result folders in the list.
+
+Have a look at the window:
+
+How to use Analyzer in LoadRunner
+
+Click on the OK button.
+
+A new window will open containing side by side comparison of both results.
+
+Here is a snapshot:
+
+How to use Analyzer in LoadRunner
+
+You can add as many result folder in the cross list as you wish, however, this will become complicated to understand and analyse. So it is suggested to keep the list short.
+
+7. Saving a Session
+Working with HP Analysis may take significant time. Since you may have merged graph or currently studying some new graph, it is a good idea to keep your session information saved.
+
+To save your session, click on the File Menu and click on Save.
+
+Below dialogue window will open:
+
+How to use Analyzer in LoadRunner
+
+Clicking the Save button will initiate the Save process which could be instant or time consuming, depending on the size of session.
+
+Here is what the window looks like:
+
+How to use Analyzer in LoadRunner
+
+7.1 Opening a Session
+You can open an existing session in similar way. Simply click Open under File Menu and select the folder of saved session. Remember, HP Analysis will not open the last folder node; rather it will open the folder itself.
+
+How to use Analyzer in LoadRunner
+
+This will open the main window of Analysis where you can resume your work.
+
+8. Exporting into HTML Report:
+HP Analysis provides a feature to export all data into a well formatted HTML or doc format report. To export, click on the Report menu and select HTML Report. Have a look at the menu below:
+
+How to use Analyzer in LoadRunner
+
+This will open a dialogue box to locate the directory where HML report will be placed.
+
+Have a look at the screen snapshot below:
+
+How to use Analyzer in LoadRunner
+
+As soon as you click the Save button, HP Analysis will start exporting results and preparing a report in HTML format. A splash screen will appear for a short period, depending upon the size of report you’re exporting:
+
+How to use Analyzer in LoadRunner
+
+After the export finishes, it will immediately open the recently exported HTML file in Internet Explorer or your default browser. Here it how your 1st Performance Testing Report looks like:
+
+How to use Analyzer in LoadRunner
+
+Video on Analyzer
+
+
+
+Click here if the video is not accessible
+
+Top 80 Loadrunner Interview Questions & Answers
+
+1) Which protocols are supported by LoadRunner?
+
+As of LoadRunner 9.5 following protocols are supported. This will increase with future releases. The interviewer is not looking for you to name all but a few (say 5-7 protocols).
+
+Application Deployment Solution: For the Citrix protocol.
+Client/Server: For DB2 CLI, DNS, MS SQL, ODBC, Oracle (2-tier), Sybase
+Ctlib, Sybase Dblib, and Windows Sockets protocols.
+Custom: For C templates, Visual Basic templates, Java templates,
+Javascript and VBScript type scripts.
+Distributed Components: For COM/DCOM, Corba-Java, and Rmi -Java protocols.
+E-business: For FTP, LDAP, Palm, Web (HTTP/HTML), Web Services, and the dual Web/Winsocket protocols.
+Enterprise Java Beans: For EJB Testing and Rmi-Java protocols.
+ERP/CRM: For Baan, Oracle NCA, Peoplesoft-Tuxedo, Peoplesoft 8,
+SAPGUI, SAP-Web, and Siebel (Siebel-DB2CLI, Siebel-MSSQL, Siebel-Web, and Siebel-Oracle) protocols.
+Legacy: For Terminal Emulation (RTE).
+Mailing Services: Internet Messaging (IMAP), MS Exchange (MAPI), POP3, and SMTP.
+Middleware: Jacada and Tuxedo (6, 7) protocols.
+Streaming: For MediaPlayer and RealPlayer protocols.
+
+2) Which components have you used in LoadRunner?
+
+Vuser generator - For generating Scripts
+
+Controller - For creating and executing scenarios
+
+Analyzer - To analyze results.
+
+Learn more about LoadRunner and its architecture in this video lesson.
+
+3) What is load runner Agent?
+
+The Agent is interface between host machine and controller.
+
+4) What is the process for developing a Vuser Script?
+
+There are four steps for developing a vuser script.
+1-Record the Vuser Script.
+2-Playback / Enhance the recorded vuser script.
+3- Define the various run-time settings & check
+
+4- Incorporate the script in a LoadRunner scenario
+
+Learn more about Vuser Script development in the Video tutorial here.
+
+5) How many VUsers are required for load testing?
+
+This is essentially a trick question.
+
+The number of VUsers required depends on your system under test, network configurations, hardware settings, memory, operating system, software applications objective of a performance test. There can not be any generic value for Vuser.
+
+6) What is the difference in running the Vuser as a process and as a thread? Which is more advantageous way of running Vuser?
+
+When Vuser is run as a process, the same driver program is loaded into memory for each Vuser. This will take a large amount of memory and will limit the number of Vusers you can run on a single generator.
+
+When Vuser is run as a thread, only one instance of driver program is shared by given number of Vusers. You can run a number of Vusers on a single generator using the multi-threading mode.
+
+
+7) What is the significance of "Vuser-init "?
+
+Vuser-init records the pre-operations also called the initialization operations before the actual application is run.
+
+8) What is extended log?
+
+An extended log will store information such as data returned by an advanced trace, parameter substitution and much other information depending on the options you select in run-time settings.
+
+9) Why do you create parameter?
+
+To create a parameter you will replace the hard-coded value within the script and replace it with a parameter. This allows a single Vuser to be run many times, and to use different data on each run. It helps in stimulating more real-life server demand as it prevents a server from caching results.
+
+Learn more about parameterization in this Video Tutorial
+
+10) How will you divide your script into multiple Actions? Why?
+
+I will divide the script into Actions based on the functionality. For example, Once Action for Logining into Application, another Action for booking and so on.
+
+Actions increase code reusability, reduce maintenance time and hence, decrease costs.
+
+11) How can you set the number of Vusers in LoadRunner?
+
+You can set the number of Vusers in the controller section while creating your scenarios. Many other advanced options like ramp-up, ramp-down of Vusers are also available in the Controller section.
+
+Learn more about Controller & Scenario creation
+
+12) What are monitors?
+
+Monitors are used to "monitor" performance bottlenecks. They are used in Controller section of Load Runner
+
+13) What are the types of checkpoints is available in LoadRunner?
+
+LoadRunner provides two types of checkpoints
+
+a) Image Checkpoints: This checkpoint will verify the presence of an image on a page during run-time
+
+b) Text Checkpoint: This checkpoint will verify the presence of a text-string on a page during run-time
+
+
+Both of the above checkpoints can be added in Vugen.
+
+Learn more about Checkpoints
+
+14) What kind of problem can we face regarding hardware, software, network and memory bottleneck during the performance test?
+
+The possible issues amongst others could be -
+
+1. Lack of Hardware
+
+2. Memory Leakage
+
+3. Network related issues.
+
+4. Application/Software error
+
+15) What would be your recommendation to improve performance measure?
+
+Fine Tuning of network, database, and app and the web server is recommended.
+
+At the network, level tryes to optimize the latency and bandwidth.
+
+At the database level, verify all indexes and sequences by running profilers. You may also optimize your database queries.
+
+At the App server level, run profilers for finding the memory leaks in the application
+
+At the web server level, you can use monitors and optimize the throughput and other related metrics of the server.
+
+16) What is Rendezvous point?
+
+The Rendezvous point is Synchronization/Wait point. Rendezvous points instruct Vusers to wait during test execution for multiple Vusers to arrive at a certain point, in order that they may simultaneously perform a task.
+
+The significance of this is to emulate some heavy load only to the particular portion of the scenario and test the behavior of the application.
+
+17) What is Correlation?
+
+Correlation is used to obtain data which is unique for each run of your test script (ex: session ids). While recording, these dynamic values are hard-coded in your script causing the script to fail during playback. Correlation is a technique where dynamic values are not hard-coded in your script but are extracted at run-time to avoid failure.
+
+
+Learn more about Correlation in this video tutorial.
+
+18) What is Manual Correlation?
+
+It's correlation technique which uses function Web_reg_save_param() to identify dynamic values in your script. It is important that your playback your script to verify that correlation is done successfully.
+
+Learn Manual Correlation.
+
+19) How do you identify the performance bottlenecks? -
+
+The Performance Bottlenecks can be detected by using monitors.
+
+These monitors might be application server monitors, web server monitors, database server monitors and network monitors.
+
+They help in finding out the troubled area in our scenario which causes increased response time.
+
+The measurements made are usually a performance response time, throughput, hits/sec, network delay graphs, etc
+
+20) Which function is used to end a nested transaction?
+
+The function is - lr_end_sub_transaction
+
+Learn More about Transactions in this video.
+
+21) What is the difference between transaction and transaction instance in LoadRunner?
+
+A transaction is used to measure the time between executions of certain statements
+
+A transaction instance is used for performance analysis
+
+22) While the script is running we find some values that may need to be correlated? Is it possible to do manual correlation for those values?
+
+NO. It's not possible to do correlation when a script is running but you can make changes once a script has stopped.
+
+23) What is Elapsed Time in Load Runner?
+
+Elapsed time designates how much time has passed since the launch of the current event and is measured differently for different screens as given below -
+
+In Scenario Status Window - Elapsed time is measured from the moment you hit "Start Scenario" or " Initialize/Run Vuser?" button.
+
+In "Vuser" window elapsed time is measured from the moment Vuser enters "running" state.
+
+24) Does caching have a negative effect on your load testing results?
+
+Yes. Caching has a negative effect. Cache is a temporary memory which stores your browsing history. When you visit a page for the SECOND time, the time required to load the page will be less than that required to load the page for your first visit since much of the information required to load the page is grabbed from the cache instead of the server. This will effect the response times in your test. Hence, it is recommended to turn-off caching.
+
+25) What is the difference between Overlay graph and Correlate graph?
+
+Overlay Graph: It will overlay the content of two graphs that share a common x-axis
+
+Correlate Graph: It will Plot the Y-axis of two graphs against each other.
+
+Learn more about Analyzer
+
+26) What is the difference between lr_error_message and lr_debug _message?
+
+lr_error_message - Sends an error message to the LoadRunner Controller's Output window
+
+lr_debug _message - Sends a debug message to the LoadRunner Controller's Output window
+
+27) What is the difference between load, performance testing?
+
+The objective of the performance testing is to check whether an application loads/updates within stipulated time limit (say 2 seconds). It uses metrics like response time, Requests per second. It is carried out under production - like load conditions.
+
+The objective of load testing is to check scalability of the system. For example, finding out the maximum number of users supported by the system within certain specifications.
+
+28) You have created several Auto-Correlation rules. A new tester on your team is preparing to record a group of scripts on the same application on his workstation. What can you do to provide the tester with the correlation rules?
+
+I would export the Auto-Correlation rules to a .cor file, and then have the new team member import the .cor file into his Auto Correlation rules
+
+29) You want to emulate a call center for an airline. All representatives login in the morning, perform their business processes and log out at night. In one day, a representative will Create 40 flight reservations, Modify 10 flight reservations, and Search for 20 flight reservations. A representative cannot perform a Modify without performing a Search first. How would you design the run logic?
+
+Create - 67% Search - 16% Block0 - 17% Search Modify
+
+30) Where should you add a web_reg_save_param function to a script?
+
+Before the step that retrieves the dynamic value
+
+31) You want to have each step in your script measured as a transaction in the Controller and not shown in the Replay Log in VuGen. How can you accomplish this?
+
+This can be done by enabling the automatic transaction in the Run-time settings.
+
+32) Which web protocol recording level generates the web_submit_form function?
+
+The HTML based recording generates this function.
+
+33) What is load testing?
+
+Load testing is to test that if the application works well with the loads from large number of simultaneous users and transactions. It also used to determine whether it can handle peak usage periods.
+
+34) What is load runner?
+
+Load Runner is a performance testing tool from HP. This tool supports all aspects such as Load, Stress, Endurance, data volume and spike Testing.
+
+35) What are all the components of LoadRunner?
+
+Following are the components of LoadRunner
+
+The Virtual User Generator
+Controller, and the Agent process
+LoadRunner Analysis and Monitoring
+LoadRunner Books Online
+36) What Component of LoadRunner is used to record a script?
+
+The Virtual User Generator (VuGen) component is used to record a script, and it enables you to develop Vuser scripts for a variety of application types and communication protocols.
+
+37) What is a rendezvous point?
+
+Rendezvous points are introduced into Vuser scripts to simulate more users on the server. Rendezvous points instruct Vusers to wait during test execution in order to perform the tasks simultaneously.
+
+For example, in a banking application, Rendezvous points are inserted for 100+ multiple users to deposit money simultaneously.
+
+38) What is a scenario?
+
+A scenario is nothing but an event that occurs for each testing session.
+
+For example, a scenario defines
+
+Number of users
+Action to be performed
+Virtual machines system
+39) How can we debug a LoadRunner script?
+
+VuGen contains two options to debug Vuser scripts.
+
+Run Step by Step command and
+Breakpoints.
+We can also manually set the message class within your script using the lr_set_debug_message function.
+
+40) How can we perform functional testing under load?
+
+Functionality under load can be tested by running several Vusers concurrently. By increasing the Vusers, it is necessary to determine how much load the server can sustain.
+
+41) What is the relationship between Response Time and Throughput?
+
+The Throughput shows the amount of data in bytes that the Vusers received from the server in a second. When It is compared with transaction response time, throughput and response time get decreased.
+
+The peak throughput and highest response time would occur approximately at the same time.
+
+42) What do vuser_init and vuser_end action contain?
+
+Vuser_init action contains procedures to log in to a server and Vuser_end section contains logoff procedures.
+
+43) What is the difference between standard log and extended log?
+
+The standard log sends a subset of functions and messages to the output log and subset of functions depends on the Vuser type.
+
+Extended log sends a detailed script execution messages to the output log. It is mainly used during debugging when a user needs information about Parameter substitution.
+
+44) What are all the types of Goals in Goal-Oriented Scenario of Load Runner?
+
+Load Runner provides you with five different types of goals:
+
+Number of concurrent Vusers
+Number of hits per second
+Number of transactions per second
+Number of pages per minute
+Transaction response time
+45) What is a function to capture dynamic values in the web vuser script?
+
+Web_reg_save_param is the function that saves dynamic data information to a parameter.
+
+46) What is the Load Runner testing process?
+
+Following are the testing process in LoadRunner:
+
+Plan load test
+Create Vuser Scripts
+Define Scenario
+Run Scenario
+Analyze results
+47) What is remote command launcher?
+
+The remote command launcher enables the controller to start applications in the host machine.
+
+48) How can we develop the database vuser script?
+
+Vuser scripts can be developed either by recording with the load vuser script generator or by using the Load runner vuser script template.
+
+49) How do you load a load runner Agent?
+
+While running the scenario, LoadRunner controller instructs the remote agent dispatcher to launch LoadRunner agent. The controller instructs the LoadRunner agent to initialize, run, pause and stop the vusers.
+
+50) What is the difference between hits/second and requests/second?
+
+Hits per second mean the number of hits the server receives in one second from the vuser.
+
+Request per second is the number of request the vuser will request from the server.
+
+51) What are the advantages of load runner?
+
+Following are the advantages of Load Runner:
+
+Reduces human intervention
+Reduces the requirement of the systems
+Helps in the better use of time and money
+Effective utilization of automation
+Single point execution
+52) What is the vuser in the scenario?
+
+The vuser is the virtual users who can simulate the real users. The virtual users who take the place of real users’s operating client software, such as IE sending requests using the HTTP protocol to IIS or Apache web servers.
+
+53) How do we write a user-defined function in LoadRunner?
+
+Use should create the external library that contains the function. This library must then be added to the bin directory of VuGen. And then, the user-defined function can be assigned as a parameter.
+
+54) What are the changes that can be made to run-time settings?
+
+There are four run-time settings that can be made:
+
+Pacing: This contains iteration count.
+Log: Logging can be set to standard or disabled.
+Think Time:  Capable of setting think time to be ignored or replaced.
+General:  Allows the setting of Vusers for processes or multi-threading.
+55) How can we find database related issues?
+
+Monitors and the Data Resource Graph can be used to find database related issues. LoadRunner allow the tester to specify the resource that needs to be measured before the controller is run.
+
+56) How many types of graphs are available in LoadRunner?
+
+There are five types of graphs:
+
+Network delay time graph – displays the time that elapses between request and response
+Two transaction response time graphs – one translation response time graph for load and another one for percentile
+Hits/second graph – Shows application traffic volume
+Pages download/second graph – shows the rate at which pages are downloaded per second
+57) How can performance bottlenecks be identified?
+
+Monitors can be used to detect a performance bottlenecks. These include network, web server, application server, and database server monitors.
+
+These monitors can be used to locate trouble spots in scenarios that cause an increase in response time and throughput, network delays, performance response time, hits/second, etc.
+
+58) What is a ramp up and how it can be set?
+
+Ramp up is gradually increasing the load on a server and can be simulated by gradually increasing the number of Vusers.  This feature can be found in the Scenario Scheduling Options.
+
+59) How can correlation be performed?
+
+Correlation can be performed in two ways:
+
+Use the scan function to search for correlations and select a value from the result.
+Record a pair of scripts and then compare them to each other.
+60) Where are automatic correlation options set?
+
+The automatic correlation is set in recording options area on the correlation tab. Correlation can be enabled for the full script and rules for correlation can be defined.
+
+Automatic correlation can be performed on a database by viewing the output window, scanning for correlation, and selecting the value that will be used.
+
+61) What is the benefit of running a Vuser script as a thread?
+
+The advantage of running a Vuser script as a thread which allows more Vusers to be used for one load generator. Running Vuser scripts as processes utilizes a lot of memory because all of the loaded scripts use the same driver.
+
+This limits the number of Vuser scripts that can be run on one generator.
+
+62) What is the difference between Overlay graph and Correlate graph?
+
+Overlay Graph:
+
+Overlay graph has one X-axis and 2 Y-axis. Left Y-axis on the merged graph shows the current graph’s value & Right Y-axis show the value of Y-axis of the graph that was merged.
+
+Correlate Graph:
+
+There are two graphs, and the active graph’s Y-axis becomes X-axis of merged graph. Y-axis of the graph that was merged becomes merged graph’s Y-axis.
+
+63) What are the three sections of a Vuser script and what is the purpose of each one?
+
+Following are the three sections of Vuser script, and they are as follows:
+
+Vuser_init - Used for recording the logon.
+Actions - Used for recording the business process.
+Vuser_end - Used for recording the logoff.
+64) What are the four selection methods when choosing data from a data file?
+
+Following are the four selection methods:
+
+Sequential
+Random
+Unique
+Parameter name
+65) What should be done to view parameter substitution in the Execution Log?
+
+Parameter substitution can be viewed in the extended log in the Run time settings.
+
+66) What tools are required to analyze Vuser run results?
+
+Following tools are required to analyze Vuser run results:
+
+Execution Log
+Run-Time Viewer and
+Mercury Test Results window
+67) What is difference between Manual scenario and Goal oriented scenario?
+
+Following are the differences between Manual and Goal Oriented scenario:
+
+
+Manual Scenario
+
+Goal Scenario
+Main purpose is to learn how many Vusers can run concurrently	Goal may be throughput, response time, or number of concurrent Vusers
+Gives you manual control over how many Vusers run and at what time	Load Runner manages Vusers automatically
+68) What are all the reasons to use the Server Resources Monitor?
+
+Server resources monitor is used to find how much data is coming from Cache and helps to find out what are all the parts of the system have bottlenecks.
+
+69) What is the purpose of selecting ‘Show browser’ during replay in the General Options settings?
+
+‘Show Browser’ setting is used to see the pages that appear during playback. This is useful for debugging Vuser during the initial stages of Web Vuser creation.
+
+70) For what purpose, User will be using ‘continue on’ error?
+
+Continue on should be set only when making Execution Logs more descriptive or adding logic to the Vuser.
+
+71) What is the purpose of a LoadRunner transaction?
+
+The purpose of a Load Runner transaction is to measure one or more steps/user actions of a business process.
+
+72) Why do you create parameters?
+
+Parameters are like script variables, and they are used to vary input to the server to emulate real users.
+
+Different sets of data are sent to the server whenever the script is run.
+Better simulate the usage model for more accurate testing from the Controller, and one script can emulate many different users on the system.
+73) What is lr_output_message?
+
+The lr_output_message is a function that sends notifications to the Controller Output window and to the Vuser log file.
+
+74) In a Web server, Database and Network are all working fine and now, Where could be the problem?
+
+The problem could be in the system itself or in the application server or in the code written for the application.
+
+75) What is VuGen Recording and Scripting? 
+
+LoadRunner script code is obtained by recording in the ANSI C language syntax and it can be viewed in the script view.
+
+76) What is Performance testing in LoadRunner? 
+
+Performance testing can be done by calculating the timing for both read and update transactions and check whether system functions are being performed in an acceptable time frame. In a multi-user environment, it is necessary to determine the effect of multiple transactions on the timing of a single transaction.
+
+77) What is the Configuration of systems when using Load Runner? 
+
+The configuration of systems refers to that of the client machines in which we will run Vusers. The configuration of client machine includes its hardware settings, memory, operating system, software applications, development tools, etc.
+
+This system component configuration should match with the overall system configuration so as to achieve the load testing objectives.
+
+78) What is the use lr_abort function?
+
+The lr_abort function is used to abort the execution of a Vuser script. It instructs the Vuser to stop executing the Actions section, execute the vuser_end section and end the execution.
+
+79) What is think time?
+
+Think time is the time where a real user waits between actions.
+
+When a user receives data from a server or other applications, the user may wait several seconds to review the data before responding. This time delay is called as think time.
+
+80) How Load Runner interacts with the application?
+
+Protocol is used in Load Runner to interact with the application.
+
+81) What is the latest version and language used in Load Runner?
+
+As of 20-Feb-2013 Load Runner 11.5 is the latest version and VUser script is used like a C Language.
+
+Following languages are supported by LoadRunner:
+
+C Language
+Visual Basic Scripting
+Visual Basic For Applications
+ Java Scripting
+82) What are all the important protocols that Load Runner supports?
+
+Following are the protocols that Load Runner can support are:
+
+.NET Record / Display
+Database
+DCOM
+Network
+Oracle E-Business
+SAP
+SOA
+Web and Multimedia
+Wireless
+GUI
+Java Record and replay
+Remote desktop
+Web 2.0
+</p>
 </body>
